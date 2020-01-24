@@ -19,19 +19,6 @@ function ImportSteamAchievementData(appid)
  return inserter;
 
 }
-function testScript()
-{
-  var test = ImportJSON("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=400", "/achievementpercentages", "noHeaders");
-  var count = Object.keys(test).length;
-  return count;
-}
-function testScript2()
-{
-  var test = ImportJSON("http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=400&key=A38DA95FFA665E6405259280AA8E58C8&steamid=76561198133758253",
-                        "/playerstats/achievements", "noHeaders");
-  var count = Object.keys(test).length;
-  return count;
-}
 
 function RawCopyCat() // import data from RawImport to DataProcessor
 {
