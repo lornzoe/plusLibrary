@@ -57,13 +57,15 @@ function RawCopyCat() // import data from RawImport to DataProcessor
   var array4 = new Array(array3.length);
   for (var i =0; i < array3.length; i++)
   {
-    array4[i] = new Array(3);
+    array4[i] = new Array();
     array4[i][0] = array3[i];
     array4[i][1] = "=VLOOKUP(" + array3[i] + ", '2 - RawImport'!A:C, 3, FALSE)";
     array4[i][2] = "=ImportSteamAchievementData(" + array3[i] + ")";
     array4[i][3] = "";
     array4[i][4] = "";
     array4[i][5] = "=ImportSteamStorePrice(" +array3[i] +") / 100";
+    array4[i][6] = "";
+    array4[i][7] = "IFERROR(VLOOKUP(" + array3[i] + ', "2 - RawImport"!J:K,2,FALSE), "")';
   }
   
   ss2.setActiveRange(ss2.getRange(ss2.getLastRow()+1, 1, array4.length, array4[0].length)).setValues(array4);
