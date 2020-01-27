@@ -1,5 +1,4 @@
-// functions to make:
-// 1. when a number is added to the blacklist, remove the respective row in MyLibrary
+// HANDLING BLACKLIST TO LIBRARY MANAGEMENT HERE
 
 function GetBlacklist()
 {
@@ -51,7 +50,7 @@ function onDPEdit(e)
 {
   Logger.log(e.source);
   var sheetname = e.source.getActiveSheet().getName();
-  if (sheetname != "3 - DataProcessing")
+  if (sheetname != "2 - RawImport")
     return;
   
   var ll = GetLibrarylist();
@@ -108,3 +107,25 @@ function ensureBlacklisted()
     }
   }
 }
+
+// automatic importing from blacklist to mylib
+
+function gameCount()
+{
+  var a = new Array();
+  a = GetLibrarylist();
+  Logger.log(a.length);
+  return a.length;
+}
+
+var myliboffset = 6;
+
+function addGame(appid) // adds game to library
+{
+  //access sheet
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary");
+  var count = gameCount();
+  sheet.getRange(count + myliboffset, 3).setValue(appid);
+  sheet.getRange(count + myliboffset, 7).setValue("=VLOOKUP(" + appid +  ", '3 - DataProcessing'!A2:H, 8, FALSE)");
+}
+

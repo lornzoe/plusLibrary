@@ -1,3 +1,21 @@
+function ImportSteamStorePrice(appid)
+{
+  var paramOne = "https://store.steampowered.com/api/appdetails?appids=" + appid + "cc=sg&filters=price_overview";
+  var paramTwo = "/" + appid + "/data/price_overview/initial";
+ 
+  Sleeper();
+      return ImportJSON(paramOne, paramTwo, "noHeaders");
+  
+}
+
+function Sleeper()
+{
+   var randnumber = Math.random()*5000;
+
+      Utilities.sleep(randnumber);
+      Utilities.sleep(randnumber);
+}
+
 function ImportSteamAchievementData(appid)
 {
   var inserter = new Array(1);
@@ -65,11 +83,12 @@ function RawCopyCat() // import data from RawImport to DataProcessor
     array4[i][4] = "";
     array4[i][5] = "=ImportSteamStorePrice(" +array3[i] +") / 100";
     array4[i][6] = "";
-    array4[i][7] = "IFERROR(VLOOKUP(" + array3[i] + ', "2 - RawImport"!J:K,2,FALSE), "")';
+    
+    addGame(array3[i]);
   }
   
   ss2.setActiveRange(ss2.getRange(ss2.getLastRow()+1, 1, array4.length, array4[0].length)).setValues(array4);
    
   Logger.log("added numbers: ", array4.length);
-   
+  
 }
