@@ -47,8 +47,13 @@ function arrayComparerForSimilarElement(array1, array2)
   return array3;
 }
 
-function onDPEdit()
+function onDPEdit(e)
 {
+  Logger.log(e.source);
+  var sheetname = e.source.getActiveSheet().getName();
+  if (sheetname != "3 - DataProcessing")
+    return;
+  
   var ll = GetLibrarylist();
   var bl =  GetBlacklist();
   
@@ -73,6 +78,33 @@ function onDPEdit()
         sheet.deleteRow(j+1);
         //Logger.log(j+1);
       }
+    }
+  }
+}
+
+// time driven function to ensure sheet 3 is synched to sheet 2 games are
+function ensureBlacklisted()
+{
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("3 - DataProcessing");
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("3 - DataProcessing").getDataRange().getValues();
+  var ss2 = GetBlacklist();
+  
+  
+  for (var i = 0; i < ss2.length; i++)
+  {
+    for (var j = ss.length-1; j >=0; j--)
+    {
+      if(ss[j][8] == "Yes") //update "yes"
+      {
+         for (var k = 0; k < ss2.length; k++)
+         {
+           if(ss[j][0] != ss2[k])
+             sheet.getRange(j+1, 8).setValue("")
+         }
+      }
+      if(ss[j][0] == ss2[i])
+         sheet.getRange(j+1, 8).setValue("Yes")
     }
   }
 }
