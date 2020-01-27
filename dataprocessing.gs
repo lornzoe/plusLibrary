@@ -84,7 +84,7 @@ function RawCopyCat() // import data from RawImport to DataProcessor
     array4[i][5] = "=ImportSteamStorePrice(" +array3[i] +") / 100";
     array4[i][6] = "";
     
-    addGame(array3[i]);
+    addGame(array3[i]); // adds game to library
   }
   
   ss2.setActiveRange(ss2.getRange(ss2.getLastRow()+1, 1, array4.length, array4[0].length)).setValues(array4);
