@@ -19,6 +19,8 @@ function getPlayedGamelist() {
   if (arr1.length != arr2.length)
   {
     Logger.log("arr1 != arr2, please check");
+    Logger.log(arr1.length);
+    Logger.log(arr2.length);
     return;
   }
   
