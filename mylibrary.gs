@@ -64,8 +64,8 @@ function onDPEdit(e)
   // if there's nothing, no point going on
   if (dl.length == 0)
     return;
-  
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary");
+
+  var sheet = e.source.getSheetByName("1 - MyLibrary");
   var ss = sheet.getDataRange().getValues();
 
   for (var i = 0; i < dl.length; i++)
