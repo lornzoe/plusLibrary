@@ -26,30 +26,58 @@ function puller()
   var exceptionsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet21")
   var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns());
 
+  for (var i = 1; i < exceptionarray.length; i++)
+  {
+    deletionlist.push(exceptionarray[i][0]);
+  }
   // comparing the deletionlist
   var removedgameslist = new Array();
   var newgameslist = new Array();
   
-  //... with localarray
-  for (var i = 1; i < localarray.length; i++)
+  //... with the 2 arrays
+  
+  for (var i = 0; i < deletionlist.length; i++)
   {
-    var foundmatch = false;
-    for (var j = 0; j < deletionlist.length; j++)
+    for (var k = 1; k < localarray.length; k++)
     {
-      if (localarray[i] == deletionlist[j])
-        foundmatch = true;
-    }
-     for (var k = 1; k < exceptionarray.length; k++)
-    {
-      if (localarray[i] == exceptionarray[k])
-        foundmatch = true;
+      var match = false;
+      if (deletionlist[i] == localarray[k])
+      {
+        match = true;
+        continue;
+      }
+      if (match == false && k == localarray.length - 1)
+      {
+        removedgameslist.push(localarray[k]);
+      }
     }
     
-    if (foundmatch == false)
-      removedgameslist.push(localarray[i]);
-
+    for (var k = 1; k < importarray.length; k++)
+    {
+      var match2 = false;
+      if (deletionlist[i] == importarray[k][0])
+      {
+        match2 = true;
+        continue;
+      }
+      if (match2 == false && k == importarray.length - 1)
+      {
+        newgameslist.push(localarray[k]);
+      }
+    }
   }
-                            
-  Logger.log(removedgameslist); 
-
+  // after creating the new arrays, 
+  Logger.log(removedgameslist.length);
+  Logger.log(newgameslist.length);
+  
+  if (removedgameslist.length > 0)
+  {
+    // function to remove games from DP and myLib
+    
+  }
+  
+  if (newgameslist.length >0)
+  {
+    // function to add games to DP and myLib
+  }
 }
