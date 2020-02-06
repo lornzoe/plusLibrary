@@ -48,8 +48,8 @@ function arrayComparerForSimilarElement(array1, array2)
 
 function onDPEdit(e)
 {
-  Logger.log(e.source.getSheetName());
-  var sheetname = e.source.getSheetName();
+  var sheetname = e.source.getActiveSheet().getSheetName();
+   Logger.log(sheetname);
   if (sheetname != "2 - RawImport")
     return;
   
