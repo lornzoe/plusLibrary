@@ -1,7 +1,7 @@
 function DataImport()
 {
   var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A38DA95FFA665E6405259280AA8E58C8&steamid=76561198133758253%0A&include_appinfo=1", "/response/games", "");
-  var localsheet = SHEET[2];
+  var localsheet = SHEETS[2];
   var localarray = localsheet.getRange(1, 1, localsheet.getMaxRows()).getValues();
   
 
@@ -28,7 +28,7 @@ function DataImport()
   
   Logger.log(deletionlist)
   
-  var exceptionsheet = SHEET[3];
+  var exceptionsheet = SHEETS[3];
   var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns());
 
   for (var i = 1; i < exceptionarray.length; i++)
