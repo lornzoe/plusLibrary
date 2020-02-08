@@ -1,4 +1,15 @@
+function PlayerStatsPuller() {
+
+  var localsheet = SHEETS[4];
+  localsheet.getRange("A5").setValue(getPlayedGameCount());
+  localsheet.getRange("B5").setValue(gameCount());
+
+  localsheet.getRange("A8:E8").setValues(getPlayerLevelSummary());
+  localsheet.getRange("A11:C11").setValues(accCreationSummarise(1397882446))
+}
+
 function getTimePlayedList()
+
 {
     var ss2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary").getRange("K6:K").getValues()
   var array2 = ss2.reduce(function(ar,e) {
