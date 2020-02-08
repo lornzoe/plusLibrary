@@ -1,7 +1,11 @@
 function DataImport()
 {
   var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=1", "/response/games", "");
-  
+    if (importarray.length <= 1)
+  {
+    Logger.log("importarray is not feeding a proper array, we're ending the function early for safety");
+    return;
+  }
    var exceptionsheet = SHEETS[3];
   var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns()).getValues();
   Logger.log(exceptionarray)
@@ -18,11 +22,7 @@ function DataImport()
   var localarray = localsheet.getRange(1, 1, localsheet.getMaxRows()).getValues();
   
 
-    if (importarray.length <= 1)
-  {
-    Logger.log("importarray is not feeding a proper array, we're ending the function early for safety");
-    return;
-  }
+  
   // Logger.log(localarray.length);
 
   // create deletion list here
