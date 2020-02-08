@@ -58,7 +58,7 @@ function getPlayedGameCount()
 
 function getPlayerLevelSummary()
 {
-  var ar = ImportJSON("https://api.steampowered.com/IPlayerService/GetBadges/v1/?key=A38DA95FFA665E6405259280AA8E58C8&steamid=76561198133758253", "/response/", "noHeaders");
+  var ar = ImportJSON("https://api.steampowered.com/IPlayerService/GetBadges/v1/?key=" + APIKEY + "&steamid="+ USERID , "/response/", "noHeaders");
   Logger.log(ar);
   //return ar;
   

@@ -22,7 +22,7 @@ function getAchievementStats(appid)
 {  
   var returnarray = new Array();
   
-  var puller =  ImportJSON("http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=" + appid + "&key=A38DA95FFA665E6405259280AA8E58C8&steamid=76561198133758253","/playerstats/achievements", "noHeaders");
+  var puller =  ImportJSON("http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=" + appid + "&key=" + APIKEY + "&steamid="+ USERID ,"/playerstats/achievements", "noHeaders");
   returnarray[0] = Object.keys(puller).length;
   
   puller = ImportJSON("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid="+ appid, "/achievementpercentages/achievements", "noHeaders");
