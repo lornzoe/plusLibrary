@@ -1,17 +1,29 @@
 function DataImport()
 {
   var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A38DA95FFA665E6405259280AA8E58C8&steamid=76561198133758253%0A&include_appinfo=1", "/response/games", "");
+  
+   var exceptionsheet = SHEETS[3];
+  var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns()).getValues();
+  Logger.log(exceptionarray)
+  for (var i = 1; i < exceptionarray.length; i++)
+  {
+    importarray.push(new Array())
+        importarray[importarray.length-1][0] = exceptionarray[i][0];
+    importarray[importarray.length-1][1] = exceptionarray[i][1];
+    Logger.log(importarray[importarray.length-1])
+  }
+  Logger.log(importarray);
+
   var localsheet = SHEETS[2];
   var localarray = localsheet.getRange(1, 1, localsheet.getMaxRows()).getValues();
   
 
-  Logger.log(importarray.length);
     if (importarray.length <= 1)
   {
     Logger.log("importarray is not feeding a proper array, we're ending the function early for safety");
     return;
   }
-  Logger.log(localarray.length);
+  // Logger.log(localarray.length);
 
   // create deletion list here
   var deletionlist = new Array();
@@ -26,16 +38,10 @@ function DataImport()
     }
   }
   
-  Logger.log(deletionlist)
+  //Logger.log(deletionlist)
   
-  var exceptionsheet = SHEETS[3];
-  var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns());
-
-  for (var i = 1; i < exceptionarray.length; i++)
-  {
-    deletionlist.push(exceptionarray[i][0]);
-  }
-    
+ 
+  
     var removedgameslist = new Array();
 
   for (var i = 1; i < localarray.length; i++)
@@ -47,7 +53,7 @@ function DataImport()
     
     for (var k = 0; k < deletionlist.length; k++)
     {
-      if (localarray[i] == deletionlist[k])
+      if (localarray[i] + '' == deletionlist[k] + '')
       {
         match = true;
         break;
@@ -67,7 +73,7 @@ function DataImport()
       
       for (var i = 0; i < deletionlist.length; i++)
       {
-        if (deletionlist[i] == importarray[k][0])
+        if (deletionlist[i] + '' == importarray[k][0] + '')
         {
           match2 = true;
         }
@@ -81,16 +87,17 @@ function DataImport()
     }
   
   // after creating the new arrays, 
-  Logger.log(removedgameslist.length);
-    Logger.log(removedgameslist);
-
+  // Logger.log(removedgameslist.length);
+  // Logger.log(removedgameslist);
+  
+  Logger.log(newgameslist);
   Logger.log(newgameslist.length);
   
   if (removedgameslist.length > 0)
   {
     for (var i = 0; i < removedgameslist.length; i++)
     {
-      for (var j = localarray.length-1; j > 0; j--)
+      for (var j = localarray.length; j > 0; j--)
       {
         if (localarray[j] == removedgameslist[i])
         {
