@@ -60,7 +60,7 @@ function DataPuller() {
                          , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A:D, 4, FALSE)"
                          ,'' 
                          ,'' 
-                         , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A$2:L, 10, FALSE) & " + '"/"' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:L, 11, FALSE)"
+                         , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A$2:L, 10, FALSE) & " + '" / "' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:L, 11, FALSE)"
                          ,"=VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:L, 12, FALSE)"
                          , '' 
                          ,"=IF(E"+refrow+">1, IFERROR(R"+refrow+"/E"+refrow+",R"+refrow+"), R"+refrow+")"
