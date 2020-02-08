@@ -38,7 +38,8 @@ function DataPuller() {
   
   Logger.log(SHEETS[1].getMaxRows())
   
-   for (var i = 0; i < missinglist.length; i++)
+  var limiter = (missinglist.length > 5) ? 4: missinglist.length;
+   for (var i = 0; i < limiter; i++)
   {
     var refrow = (SHEETS[1].getMaxRows() + 1)  + '';
     var refid = missinglist[i] + '';

@@ -1,5 +1,7 @@
 function AchievementUpdater()
 {
+    Logger.log(USERID)
+
   var localsheet = SHEETS[2]
   
   // Get the existing list of games
@@ -22,7 +24,9 @@ function getAchievementStats(appid)
 {  
   var returnarray = new Array();
   
-  var puller =  ImportJSON("http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=" + appid + "&key=" + APIKEY + "&steamid="+ USERID ,"/playerstats/achievements", "noHeaders");
+  
+  var apilink = "http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=" + appid + "&key=" + APIKEY + "&steamid="+ USERID
+  var puller =  ImportJSON(apilink,"/playerstats/achievements", "noHeaders");
   returnarray[0] = Object.keys(puller).length;
   
   puller = ImportJSON("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid="+ appid, "/achievementpercentages/achievements", "noHeaders");

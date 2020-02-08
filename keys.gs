@@ -1,5 +1,5 @@
-var USERID = 76561198133758253;
-var APIKEY = "A38DA95FFA665E6405259280AA8E58C8";
+var USERID = "76561198133758253";
+var APIKEY = "A38DA95FFA665E6405259280AA8E58C8" ;
 
 var OVERVIEW = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0 - Overview");
 var MYLIBRARY= SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary");
