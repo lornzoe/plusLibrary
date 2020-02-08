@@ -1,5 +1,5 @@
 function DataPuller() {
-  
+    
   // filter blacklists from
   var mainarray = SHEETS[2].getRange(2,1,SHEETS[2].getMaxRows() - 1).getValues(); 
   var subsetarray = SHEETS[1].getRange(6, 3, SHEETS[1].getMaxRows() - 5).getValues();
@@ -42,6 +42,10 @@ function DataPuller() {
   {
     var refrow = (SHEETS[1].getMaxRows() + 1)  + '';
     var refid = missinglist[i] + '';
+    
+    SHEETS[0].appendRow(['']);
+    SHEETS[0].getRange(SHEETS[0].getMaxRows(), 14, 1, 2).setBorder(false, true, false, true, null, null);
+      
     SHEETS[1].appendRow([''
                          , "=VLOOKUP(" + missinglist[i] + ", '2 - DataProcessing'!A:C, 2, FALSE)"
                          , refid
@@ -62,7 +66,10 @@ function DataPuller() {
                          ,"=IF(ISNUMBER(VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:G, 7, FALSE)),VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:G, 7, FALSE), VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:H, 8, FALSE))"
                          , "=G"+refrow+"-R"+refrow+""
                          , "=TO_PERCENT(IFERROR(S"+refrow+"/R"+refrow+",S"+refrow+"/1))" ]);
+    SHEETS[1].getRange(SHEETS[1].getMaxRows(), 14, 1, 2).setBorder(false, true, false, true, null, null);  
   }
+  
+  OverviewAdjust();
 }
 
 function getMissingElements(mainarray, subsetarray){
