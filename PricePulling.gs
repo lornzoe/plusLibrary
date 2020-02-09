@@ -22,6 +22,7 @@ function StorePriceUpdater()
 function getStorePriceArray()
 {
   var localsheet = SHEETS[2];
+  Logger.log(localsheet.getMaxRows())
   var localarray = localsheet.getRange(1, 1, localsheet.getMaxRows()).getValues();
   
     //Logger.log(localarray.length);
@@ -59,7 +60,7 @@ function StoreArrayPrettifier(importarray)
   {
     returnarray[j-1] = new Array();
     returnarray[j-1][0] = localarray[j]+ "";
-    Logger.log(localarray[j])
+    //Logger.log(localarray[j])
     
     var searchterm = "/" + localarray[j] +"/success";
     
@@ -69,14 +70,20 @@ function StoreArrayPrettifier(importarray)
       if (importarray[0][k] == searchterm)
       {
         highestindex = k;
+        Logger.log(importarray[0][k] + "//" + highestindex + "//" + importarray[1][k])
+
         break;
       }
+
     }
-    if (importarray[1][k] == "TRUE" || importarray[1][k] == "true")
+    
+    
+    if (importarray[1][k] === "TRUE" || importarray[1][k] === "true")
     {
      var searchterm2 = "/" + localarray[j] + "/data/price_overview/final";
+      
      var isfound = false;
-     for (var m = k; m <= k + 10; m++) //limit to +10 searches 
+     for (var m = k; m <= k + 5; m++) //limit to +10 searches 
      {
        if (importarray[0][m] == searchterm2)
        {
@@ -85,17 +92,22 @@ function StoreArrayPrettifier(importarray)
          break;
        }
      }
-      if (!isfound) // CASE B
+      if (isfound == false) // CASE B
       {
         returnarray[j-1][1] = "ERROR_NOPRICE";
       }
     }
-    else //  (importarray[1][k] == "FALSE" || importarray[1][k] == "false")
+    else if(importarray[1][k] == "FALSE" || importarray[1][k] === "false")
     {
       returnarray[j-1][1] = "ERROR_FALSE"
       continue;
     }
+    else
+    {
+      returnarray[j-1][1] = "UNK_VAL"
+    }
+    
   }
-  Logger.log(returnarray);
+  //Logger.log(returnarray);
   return returnarray;
 }
