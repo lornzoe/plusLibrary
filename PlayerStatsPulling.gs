@@ -8,6 +8,14 @@ function PlayerStatsPuller() {
   localsheet.getRange("A11:C11").setValues(accCreationSummarise(1397882446))
 }
 
+function gameCount()
+{
+  var a = new Array();
+  a = GetLibrarylist();
+  //Logger.log(a.length);
+  return a.length;
+}
+
 function GetLibrarylist()
 {
    var ss2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary").getRange("C6:C").getValues()
