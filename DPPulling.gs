@@ -1,5 +1,11 @@
 function DataPuller() {
     
+  var lock = LockService.getScriptLock();
+  var success = lock.tryLock(10000);
+  if (!success) {
+  Logger.log('Could not obtain lock after 10 seconds.');
+    return;
+  }
   // filter blacklists from
   var mainarray = SHEETS[2].getRange(2,1,SHEETS[2].getMaxRows() - 1).getValues(); 
   var subsetarray = SHEETS[1].getRange(6, 3, SHEETS[1].getMaxRows() - 5).getValues();
@@ -41,6 +47,8 @@ function DataPuller() {
   var limiter = (missinglist.length > 5) ? 4: missinglist.length;
    for (var i = 0; i < limiter; i++)
   {
+    ReloadSheets();
+    
     var refrow = (SHEETS[1].getMaxRows() + 1)  + '';
     var refid = missinglist[i] + '';
     
@@ -71,6 +79,8 @@ function DataPuller() {
   }
   
   OverviewAdjust();
+  lock.releaseLock()
+
 }
 
 function getMissingElements(mainarray, subsetarray){
@@ -97,6 +107,5 @@ function getMissingElements(mainarray, subsetarray){
       returnarray.push(mainarray[i]);
     }
   }
-  
   return returnarray;
 }

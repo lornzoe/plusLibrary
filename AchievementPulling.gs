@@ -1,5 +1,10 @@
 function AchievementUpdater()
-{
+{  var lock = LockService.getScriptLock();
+  var success = lock.tryLock(10000);
+  if (!success) {
+  Logger.log('Could not obtain lock after 10 seconds.');
+    return;
+  }
     Logger.log(USERID)
 
   var localsheet = SHEETS[2]
@@ -17,7 +22,7 @@ function AchievementUpdater()
     localsheet.getRange(i+2, 11).setValue(acharray[1])
     localsheet.getRange(i+2, 12).setValue(acharray[2])
   }
-  
+  lock.releaseLock()
 }
 
 function getAchievementStats(appid) 
@@ -31,7 +36,7 @@ function getAchievementStats(appid)
   
   puller = ImportJSON("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid="+ appid, "/achievementpercentages/achievements", "noHeaders");
   returnarray[1] = Object.keys(puller).length;
-  
+  Utilities.sleep(100)
   if (returnarray[1] != 0)
   {
     returnarray[2] = returnarray[0]/returnarray[1];
@@ -40,5 +45,6 @@ function getAchievementStats(appid)
     returnarray[2] = '-';
   
   //Logger.log('A' +appid + '//' + returnarray)
+  
   return returnarray;
 }

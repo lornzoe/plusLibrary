@@ -1,6 +1,13 @@
 function DataImport()
 {
-  var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=1", "/response/games", "");
+  
+  var lock = LockService.getScriptLock();
+  var success = lock.tryLock(10000);
+  if (!success) {
+  Logger.log('Could not obtain lock after 10 seconds.');
+    return;
+  }
+  var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"&include_appinfo=1", "/response/games", "");
     if (importarray.length <= 1)
   {
     Logger.log("importarray is not feeding a proper array, we're ending the function early for safety");
@@ -115,5 +122,6 @@ function DataImport()
        localsheet.appendRow([newgameslist[i][0], '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + newgameslist[i][0] +'/capsule_184x69.jpg")', newgameslist[i][1] , newgameslist[i][2], newgameslist[i][2]/60  ])
     }
   }
+  lock.releaseLock();
 }
 

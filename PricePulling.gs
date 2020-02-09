@@ -1,5 +1,12 @@
 function StorePriceUpdater()
 {
+     
+  var lock = LockService.getScriptLock();
+  var success = lock.tryLock(10000);
+  if (!success) {
+  Logger.log('Could not obtain lock after 10 seconds.');
+    return;
+  }
     var importarray = getStorePriceArray();
     var localsheet = SHEETS[2];
     for (var i = 0;  i < importarray.length; i++)
@@ -9,6 +16,7 @@ function StorePriceUpdater()
       else
         localsheet.getRange(i+2 , 7).setValue(importarray[i][1])
     }
+  lock.releaseLock()
 }
 
 function getStorePriceArray()
@@ -29,7 +37,7 @@ function getStorePriceArray()
       apilink += ','
   }
   apilink += '&cc=sg&filters=price_overview'
-      //Logger.log(apilink)
+      Logger.log(apilink)
 
 
   
@@ -50,7 +58,7 @@ function StoreArrayPrettifier(importarray)
   for (var j = 1; j < localarray.length; j++)
   {
     returnarray[j-1] = new Array();
-    returnarray[j-1][0] = localarray[j].toString();
+    returnarray[j-1][0] = localarray[j]+ "";
     Logger.log(localarray[j])
     
     var searchterm = "/" + localarray[j] +"/success";
@@ -68,7 +76,7 @@ function StoreArrayPrettifier(importarray)
     {
      var searchterm2 = "/" + localarray[j] + "/data/price_overview/final";
      var isfound = false;
-     for (var m = k; m < k + 5; m++) //limit to +10 searches 
+     for (var m = k; m <= k + 10; m++) //limit to +10 searches 
      {
        if (importarray[0][m] == searchterm2)
        {
