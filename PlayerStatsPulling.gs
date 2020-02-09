@@ -18,7 +18,7 @@ function gameCount()
 
 function GetLibrarylist()
 {
-   var ss2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary").getRange("C6:C").getValues()
+   var ss2 = SHEETS[1].getRange("C6:C").getValues()
   var array2 = ss2.reduce(function(ar,e) {
     if (e[0])
       ar.push(e[0])
@@ -31,7 +31,7 @@ function GetLibrarylist()
 function getTimePlayedList()
 
 {
-    var ss2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary").getRange("K6:K").getValues()
+    var ss2 = SHEETS[1].getRange("K6:K").getValues()
   var array2 = ss2.reduce(function(ar,e) {
     if (e[0] != "#N/A")
       ar.push(e[0])
