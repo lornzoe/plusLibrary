@@ -28,3 +28,9 @@ function BackupPrices() {
   spreadsheet.getRange('D1').activate();
   spreadsheet.getRange('\'2 - DataProcessing\'!H:I').copyTo(spreadsheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
 };
+
+function LibSort() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  spreadsheet.getRange('B5:O').activate();
+  spreadsheet.getActiveRange().offset(1, 0, spreadsheet.getActiveRange().getNumRows() - 1).sort({column: 3, ascending: true});
+};
