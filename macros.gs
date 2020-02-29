@@ -31,6 +31,6 @@ function BackupPrices() {
 
 function LibSort() {
   var spreadsheet = SpreadsheetApp.getActive();
-  spreadsheet.getRange('B5:O').activate();
+  spreadsheet.getRange('B5:T').activate();
   spreadsheet.getActiveRange().offset(1, 0, spreadsheet.getActiveRange().getNumRows() - 1).sort({column: 3, ascending: true});
 };
