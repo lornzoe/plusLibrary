@@ -27,6 +27,7 @@ function OverviewAdjust()
   
     if (discriminant > 0) //overview has more 
   {
+    Logger.log("APPROACH TAKEN: DELETEROW()")
     for (var i = discriminant; i > 0; i--)
     {
       SHEETS[0].deleteRow(gamecount+16);
@@ -34,6 +35,8 @@ function OverviewAdjust()
   }
   else if (discriminant < 0) // overview has less
   {
+    Logger.log("APPROACH TAKEN: APPENDROW()")
+
     discriminant *= -1;
     for (var i = discriminant; i > 0; i--)
     {
@@ -41,6 +44,11 @@ function OverviewAdjust()
       // SHEETS[0].getRange(SHEETS[0].getMaxRows(), 14, 1, 2).setBorder(false, true, false, true, null, null);
       
     }
+  }
+  else
+  {
+        Logger.log("APPROACH TAKEN: NIL")
+
   }
   ReloadSheets()
   
