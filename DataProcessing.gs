@@ -7,7 +7,7 @@ function DataImport()
   Logger.log('Could not obtain lock after 10 seconds.');
     return;
   }
-  var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"&include_appinfo=1", "/response/games", "");
+  var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"&include_appinfo=1&include_played_free_games=1", "/response/games", "");
     if (importarray.length <= 1)
   {
     Logger.log("importarray is not feeding a proper array, we're ending the function early for safety");
