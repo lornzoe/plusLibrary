@@ -88,6 +88,7 @@ function getAchievementStats(appid)
   Utilities.sleep(100)
   if (returnarray[1] != 0  && JSON.stringify(puller) != '[[""]]')
   {
+    returnarray[1] = 0;
     returnarray[2] = returnarray[0]/returnarray[1];
   }
   else
