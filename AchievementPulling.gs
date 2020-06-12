@@ -86,7 +86,7 @@ function getAchievementStats(appid)
   puller = ImportJSON("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid="+ appid, "/achievementpercentages/achievements", "noHeaders");
   returnarray[1] = Object.keys(puller).length;
   Utilities.sleep(100)
-  if (returnarray[1] != 0)
+  if (returnarray[1] != 0  && JSON.stringify(puller) != '[[""]]')
   {
     returnarray[2] = returnarray[0]/returnarray[1];
   }
