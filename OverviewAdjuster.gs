@@ -52,6 +52,7 @@ function OverviewAdjust()
   }
   ReloadSheets()
   
+  // border formatting
   SHEETS[0].getRange(17, 14, SHEETS[0].getMaxRows() - 17, 2).setBorder(true, true, true, true, null, false);
   SHEETS[0].getRange(17, 5, SHEETS[0].getMaxRows() - 17, 2).setBorder(true, true, true, true, null, false);
   SHEETS[0].getRange(17, 8, SHEETS[0].getMaxRows() - 17, 2).setBorder(true, true, true, true, null, false);
@@ -59,6 +60,11 @@ function OverviewAdjust()
   SHEETS[0].getRange(17, 18, SHEETS[0].getMaxRows() - 17, 3).setBorder(true, true, true, true, null, false);
   SHEETS[0].getRange(17, 2, SHEETS[0].getMaxRows() - 17, 3).setBorder(true, true, true, true, null, true);
   SHEETS[0].getRange(17, 6, SHEETS[0].getMaxRows() - 17, 1).setBorder(true, true, true, true, null, false);
+  
+  // checkbox formatting
+  SHEETS[0].getRange(17, 13, SHEETS[0].getMaxRows() - 17, 1).insertCheckboxes().setValue("");
+  SHEETS[0].getRange(SHEETS[0].getMaxRows(), 13).removeCheckboxes().setValue("");
+
   lock.releaseLock()
 
 }
