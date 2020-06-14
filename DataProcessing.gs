@@ -123,5 +123,8 @@ function DataImport()
     }
   }
   lock.releaseLock();
+  
+  DPSort();
+  
 }
 

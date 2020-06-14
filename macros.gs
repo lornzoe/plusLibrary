@@ -6,7 +6,7 @@ function DPSort() {
   Logger.log('Could not obtain lock after 10 seconds.');
     return;
   }
-  var spreadsheet = SpreadsheetApp.getActive();
+  var spreadsheet = SHEETS[2];
   spreadsheet.getRange('A1').activate();
   var currentCell = spreadsheet.getCurrentCell();
   spreadsheet.getActiveRange().getDataRegion().activate();
