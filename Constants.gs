@@ -1,5 +1,4 @@
-var USERID = "76561198133758253";
-var APIKEY = "9C2F8B579B777036AD7B17C6A5BEC8FA" ;
+
 
 var OVERVIEW = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0 - Overview");
 var MYLIBRARY= SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary");
@@ -22,3 +21,5 @@ function ReloadSheets()
   PLAYERSTATS = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("4 - PlayerStats");
 }
 
+var USERID = SHEETS[4].getRange("A2").getValue();
+var APIKEY = SHEETS[4].getRange("B2").getValue();
