@@ -59,12 +59,11 @@ function DataPuller() {
                          , "=VLOOKUP(" + missinglist[i] + ", '2 - DataProcessing'!A:C, 2, FALSE)"
                          , refid
                          , "=VLOOKUP(" + missinglist[i] + ", '2 - DataProcessing'!A:C, 3, FALSE)"
-                         , "=K" +refrow +'& IF(J6>0," ("& J6 & ")", "")'
-                         , "=IF(K"+ refrow+ "/60>1, IFERROR(G"+refrow+"/(K"+refrow+"/60),G"+refrow+"), G" +refrow+")"
+                         , "=K" + refrow 
+                         , "=VLOOKUP(C403, '2 - DataProcessing'!A:Q, 17, FALSE)"
                          , "=VLOOKUP("+ refid +", '2 - DataProcessing'!$A$2:I, 9, FALSE)"
                          , ''
                          , '' 
-                         , "=ROUND(VLOOKUP(" + refid + ", '2 - DataProcessing'!A:Q, 17, FALSE),2)" 
                          , "=ROUND(VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE), 2)"
                          , '' 
                          , '' 

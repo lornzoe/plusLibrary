@@ -31,7 +31,10 @@ function RecentTimePuller(){
       {
         // copy-paste time here 
         localsheet.getRange(j+2, 16).setValue(importarray[i][1]);
-        localsheet.getRange(j+2, 17).setValue(importarray[i][1]/60);
+        if (importarray[i][1]/60 != 0)
+          localsheet.getRange(j+2, 17).setValue(importarray[i][1]/60);
+        else
+          localsheet.getRange(j+2, 17).setValue('-');
       }
     }
   }
