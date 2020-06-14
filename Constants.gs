@@ -21,3 +21,5 @@ function ReloadSheets()
   EXCEPTIONLIST = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("3 - ExceptionList");
   PLAYERSTATS = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("4 - PlayerStats");
 }
+
+var CHECKBOX = DataValidationBuilder.withCriteria(SpreadsheetApp.DataValidationCriteria.CHECKBOX, [true,false]);
