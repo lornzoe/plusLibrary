@@ -227,11 +227,12 @@ function StoreArrayPrettifier2(importarray, indexarray)
       }
 
     }
+
     
     
     if (importarray[1][k] === "TRUE" || importarray[1][k] === "true")
     {
-     var searchterm2 = "/" + indexarray[j-1][0] + "/data/price_overview/final";
+     var searchterm2 = "/" + indexarray[j-1][0] + "/data/price_overview/initial";
       
      var isfound = false;
      for (var m = k; m <= k + 5; m++) //limit to +10 searches 
