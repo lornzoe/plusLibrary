@@ -54,7 +54,7 @@ function OverviewAdjust()
   
   // border formatting
   SHEETS[0].getRange(17, 2, SHEETS[0].getMaxRows() - 17, 3).setBorder(true, true, true, true, false, true);
-  SHEETS[0].getRange(17, 5, SHEETS[0].getMaxRows() - 17, 3).setBorder(true, true, true, true, true, false);
+  SHEETS[0].getRange(17, 5, SHEETS[0].getMaxRows() - 17, 3).setBorder(true, true, true, true, false, false);
   SHEETS[0].getRange(17, 8, SHEETS[0].getMaxRows() - 17, 1).setBorder(true, true, true, true, false, true);
   SHEETS[0].getRange(17, 9, SHEETS[0].getMaxRows() - 17, 5).setBorder(true, true, true, true, false, true);
 
