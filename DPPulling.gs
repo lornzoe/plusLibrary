@@ -1,111 +1,71 @@
-function DataPuller() {
-    
-  var lock = LockService.getScriptLock();
-  var success = lock.tryLock(10000);
-  if (!success) {
-  Logger.log('Could not obtain lock after 10 seconds.');
-    return;
-  }
-  // filter blacklists from
-  var mainarray = SHEETS[2].getRange(2,1,SHEETS[2].getMaxRows() - 1).getValues(); 
-  var subsetarray = SHEETS[1].getRange(6, 3, SHEETS[1].getMaxRows() - 5).getValues();
+function MyLibUpdater()
+{
+  var mainarray = SHEETS[2].getRange("D6:D").getValues();
+  var importarray = SHEETS[1].getRange("A2:A").getValues();
   
-  //Logger.log(mainarray);
-  //Logger.log(subsetarray);
-  
-  var missinglist = getMissingElements(mainarray,subsetarray);
-  
-  Logger.log(missinglist);
-  // Logger.log(missinglist.length);
-
-  // Look for blacklisted entries and splice them out
-  var blacklist = SHEETS[2].getRange(2,6,SHEETS[2].getMaxRows() - 1).getValues();
-  // Logger.log(blacklist);
-  
-  var removalarray = new Array();
-  for (var i = 0; i < blacklist.length; i++)
+  for (let i = importarray.length-1; i >= 0; i--)
   {
-    if (blacklist[i] == 'true')
-      removalarray.push(mainarray[i]);
-  }
-  // Logger.log(removalarray);
-
-  for (var i = missinglist.length; i >= 0; i--)
-  {
-    for (var j = 0; j < removalarray.length; j++)
+    for (let j = mainarray.length-1; j >= 0; j--)
     {
-      if (missinglist[i] == removalarray[j])
+      if (mainarray[j] + '' == importarray[i] + '')
       {
-        missinglist.splice(i, 1);
-      }
-    }
-  }
-  // Logger.log(missinglist)
-  
-  Logger.log(SHEETS[1].getMaxRows())
-  
-  var limiter = (missinglist.length > 5) ? 4: missinglist.length;
-   for (var i = 0; i < limiter; i++)
-  {
-    ReloadSheets();
-    
-    var refrow = (SHEETS[1].getMaxRows() + 1)  + '';
-    var refid = missinglist[i] + '';
-    
-    SHEETS[0].appendRow(['']);
-    SHEETS[0].getRange(SHEETS[0].getMaxRows(), 14, 1, 2).setBorder(false, true, false, true, null, null);
-      
-    SHEETS[1].appendRow([''
-                         , "=VLOOKUP(" + missinglist[i] + ", '2 - DataProcessing'!A:C, 2, FALSE)"
-                         , refid
-                         , "=VLOOKUP(" + missinglist[i] + ", '2 - DataProcessing'!A:C, 3, FALSE)"
-                         , "=K" + refrow 
-                         , "=VLOOKUP(C" + refrow + ", '2 - DataProcessing'!A:Q, 17, FALSE)"
-                         , "=VLOOKUP("+ refid +", '2 - DataProcessing'!$A$2:I, 9, FALSE)"
-                         , ''
-                         , '' 
-                         , '' 
-                         , "=ROUND(VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE), 2)"
-                         , ''
-                         , '' 
-                         , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A$2:L, 10, FALSE) & " + '" / "' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:L, 11, FALSE)"
-                         , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:L, 12, FALSE)"
-                         , '' 
-                         , "=IF(E"+refrow+">1, IFERROR(R"+refrow+"/E"+refrow+",R"+refrow+"), R"+refrow+")"
-                         , "=IF(ISNUMBER(VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:G, 7, FALSE)),VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:G, 7, FALSE), VLOOKUP("+ refid +", '2 - DataProcessing'!A$2:H, 8, FALSE))"
-                         , "=G"+refrow+"-R"+refrow+""
-                         , "=TO_PERCENT(IFERROR(S"+refrow+"/R"+refrow+",S"+refrow+"/1))" ]);
-    SHEETS[1].getRange(SHEETS[1].getMaxRows(), 14, 1, 2).setBorder(false, true, false, true, null, null);  
-  }
-  
-  OverviewAdjust();
-  lock.releaseLock()
-
-}
-
-function getMissingElements(mainarray, subsetarray){
-
-  var returnarray = new Array();
-  var hasmatch = true;
-  
-  for (var i = 0; i < mainarray.length; i++)
-  {
-    hasmatch = false;
-    for (var j = 0; j < subsetarray.length; j++)
-    {
-      if (subsetarray[j] + '' == mainarray[i] + '') // i dont know why the 2 arrays are not the same data type (have to convert both to string, like nanda the fucking kore.
-      {
-        hasmatch = true;
-              // Logger.log('Comparing ' + subsetarray[j] + ' w/ ' + mainarray[i] + ' , ' + hasmatch)
-
+        mainarray.splice(j, 1);
+        importarray.splice(i, 1);
+        
         break;
       }
     }
-    
-    if (hasmatch == false)
+  }
+  
+  // mainarray leftover: delete.
+  {
+    let referencearray = SHEETS[1].getRange("D6:D").getValues();
+    for (let j = mainarray.length -1; j >= 0; j--)
     {
-      returnarray.push(mainarray[i]);
+      for (let k = referencearray.length-1; k >=0; k--)
+      {
+        if (referencearray[k] == mainarray[j])
+        {
+          SHEETS[2].deleteRow(k+6);
+          break;
+        }
+      }
+    }
+  }  
+  
+  // importarray leftover: import.
+  {
+    let cellrule = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup").getRange("B2").getDataValidation();
+    for (let i = 0; i < importarray.length; i++)
+    {
+      let refid = importarray[i];
+      let refrow = SHEETS[1].getMaxRows() + 1;
+      
+      SHEETS[0].appendRow(['']);
+      
+      SHEETS[1].appendRow([''
+                           , "FALSE"
+                           , '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")'
+                           , refid
+                          , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
+                          , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:D, 4, FALSE)"
+                          , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE)"
+                          , "=IF(F" + refrow + " >1, IFERROR(I" + refrow + "/F" + refrow + ", I" + refrow + "), I" + refrow + ")"
+                          , ''
+                          , '' 
+                          , '' 
+                          , "FALSE"
+                          , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A:L, 7, FALSE) & " + '" / "' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 8, FALSE)"
+                          , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 9, FALSE)"
+                          , '' 
+                          , "=IF(F"+refrow+">1, IFERROR(Q"+refrow+"/F"+refrow+",Q"+refrow+"), Q"+refrow+")"
+                          , ''
+                          , "=I"+refrow+"-Q"+refrow+""
+                          , "IFERROR(R"+refrow+"/Q"+refrow+",R"+refrow+"/1)" ]);
+            
+      SHEETS[1].getRange(refrow, 2).insertCheckboxes();
+      SHEETS[1].getRange(refrow, 11).insertCheckboxes();
+      SHEETS[1].getRange(refrow, 9).setDataValidation(cellrule);
     }
   }
-  return returnarray;
 }

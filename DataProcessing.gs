@@ -38,7 +38,7 @@ function DataImporter()
   {
     for (var i = 0; i < idarray.length; i++)
     {
-      for (var j =0; j < localarray.length; j++)
+      for (var j =localarray.length -1; j >= 0; j--)
       {
         if (idarray[i] == localarray[j])
         {
