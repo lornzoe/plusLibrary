@@ -1,112 +1,46 @@
-function DataImport()
+function DataImporter()
 {
-  
-  var lock = LockService.getScriptLock();
-  var success = lock.tryLock(10000);
-  if (!success) {
-  Logger.log('Could not obtain lock after 10 seconds.');
-    return;
-  }
-  var importarray = ImportJSON("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"&include_appinfo=1&include_played_free_games=1", "/response/games", "");
-    if (importarray.length <= 1)
-  {
-    Logger.log("importarray is not feeding a proper array, we're ending the function early for safety");
-    return;
-  }
-   var exceptionsheet = SHEETS[3];
+  var localsheet = SHEETS[2];
+  var idarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
+  var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=1", "$.response.games[*]", "appid, name, playtime_forever, playtime_2weeks");
+  var exceptionsheet = SHEETS[3];
   var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns()).getValues();
-  Logger.log(exceptionarray)
+
+  // binding exceptionarray to importarray
   for (var i = 1; i < exceptionarray.length; i++)
   {
     importarray.push(new Array())
-        importarray[importarray.length-1][0] = exceptionarray[i][0];
+    importarray[importarray.length-1][0] = exceptionarray[i][0];
     importarray[importarray.length-1][1] = exceptionarray[i][1];
+    importarray[importarray.length-1][2] = '';
+    importarray[importarray.length-1][3] = ''; 
     Logger.log(importarray[importarray.length-1])
   }
-  Logger.log(importarray);
-
-  var localsheet = SHEETS[2];
-  var localarray = localsheet.getRange(1, 1, localsheet.getMaxRows()).getValues();
   
-
-  
-  // Logger.log(localarray.length);
-
-  // create deletion list here
-  var deletionlist = new Array();
-  for (var i = 1; i < localarray.length; i++)
+  // comparison phase
+  for (var i = importarray.length-1; i >= 0; i--)
   {
-    for (var j = 1; j < importarray.length; j++)
+    for (var j = idarray.length-1; j >= 0; j--)
     {
-      if (localarray[i] == importarray[j][0])
+      if (idarray[j] + '' == importarray[i][0] + '')
       {
-        deletionlist.push(localarray[i]);
-      }
-    }
-  }
-  
-  //Logger.log(deletionlist)
-  
- 
-  
-    var removedgameslist = new Array();
-
-  for (var i = 1; i < localarray.length; i++)
-  {
-    // compare local array with deletion list
-    // if theres anyhting 
-    var match = false;
-    var indextopush = i;
-    
-    for (var k = 0; k < deletionlist.length; k++)
-    {
-      if (localarray[i] + '' == deletionlist[k] + '')
-      {
-        match = true;
+        idarray.splice(j, 1);
+        importarray.splice(i, 1);
+        
         break;
       }
     }
-    if (match == false)
-    {
-      removedgameslist.push(localarray[i]);
-    }
   }
   
-  // comparing for new game entries
-  var newgameslist = new Array();
-  for (var k = 1; k < importarray.length; k++)
-    {
-      var match2 = false;
-      
-      for (var i = 0; i < deletionlist.length; i++)
-      {
-        if (deletionlist[i] + '' == importarray[k][0] + '')
-        {
-          match2 = true;
-        }
-      }
-      
-      if (match2 == false)
-      {
-        newgameslist.push(new Array());
-        newgameslist[newgameslist.length-1] = [importarray[k][0],importarray[k][1], importarray[k][2]];
-      }
-    }
-  
-  // after creating the new arrays, 
-  // Logger.log(removedgameslist.length);
-  // Logger.log(removedgameslist);
-  
-  Logger.log(newgameslist);
-  Logger.log(newgameslist.length);
-  
-  if (removedgameslist.length > 0)
+  // deletion phase
+  var localarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
+  if (idarray.legnth > 0) 
   {
-    for (var i = 0; i < removedgameslist.length; i++)
+    for (var i = 0; i < idarray.length; i++)
     {
-      for (var j = localarray.length; j > 0; j--)
+      for (var j =0; j < localarray.length; j++)
       {
-        if (localarray[j] == removedgameslist[i])
+        if (idarray[i] == localarray[j])
         {
           localsheet.deleteRow(j+1);
           break;
@@ -115,27 +49,27 @@ function DataImport()
     }
   }
   
-  if (newgameslist.length > 0)
+  //addition phase
+  if(importarray.length > 0)
   {
-    for (var i = 0; i < newgameslist.length; i++)
+    for (var i = 0; i < importarray.length; i++)
     {
-       localsheet.appendRow([newgameslist[i][0],
-                             '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + newgameslist[i][0] +'/capsule_184x69.jpg")', 
-                             newgameslist[i][1],
-                             "FALSE",
-                             newgameslist[i][2]])
+       localsheet.appendRow([importarray[i][0],
+                             '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + importarray[i][0] +'/capsule_184x69.jpg")', 
+                             importarray[i][1],
+                             importarray[i][2],
+                             importarray[i][3]
+                           ]);
     }
+    DPSort();
   }
-  lock.releaseLock();
-  
-  DPSort();
 }
 
-function DataImporter()
-{
-  var localsheet = SHEETS[2];
-  var idarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
-  var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=0", "$.response.games[*]", "appid, playtime_forever, playtime_2weeks");
-
-}
-
+function DPSort() {
+  var spreadsheet = SHEETS[2];
+  spreadsheet.getRange('A1').activate();
+  var currentCell = spreadsheet.getCurrentCell();
+  spreadsheet.getActiveRange().getDataRegion().activate();
+  currentCell.activateAsCurrentCell();
+  spreadsheet.getActiveRange().offset(1, 0, spreadsheet.getActiveRange().getNumRows() - 1).sort({column: 1, ascending: true});
+};
