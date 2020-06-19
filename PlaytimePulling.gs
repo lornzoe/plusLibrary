@@ -9,12 +9,11 @@ function CombinedTimePuller(){
     {
       if (idarray[j] == importarray[i][0])
       {
-        localsheet.getRange(j+2, 4).setValue(importarray[i][1]);
-        localsheet.getRange(j+2, 5).setValue(importarray[i][1]/60);
-        localsheet.getRange(j+2, 17).setValue('-');
-        localsheet.getRange(j+2, 16).setValue(importarray[i][2]);
-        if (importarray[i][2]/60 != 0)
-          localsheet.getRange(j+2, 17).setValue(importarray[i][2]/60);
+        localsheet.getRange(j+2, 5).setValue(importarray[i][1]);
+        localsheet.getRange(j+2, 6).setValue('-');
+        
+        if(importarray[i][2] != null)
+          localsheet.getRange(j+2, 6).setValue(importarray[i][2]);
       }
     }
   }

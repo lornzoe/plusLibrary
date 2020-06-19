@@ -119,12 +119,23 @@ function DataImport()
   {
     for (var i = 0; i < newgameslist.length; i++)
     {
-       localsheet.appendRow([newgameslist[i][0], '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + newgameslist[i][0] +'/capsule_184x69.jpg")', newgameslist[i][1] , newgameslist[i][2], newgameslist[i][2]/60  ])
+       localsheet.appendRow([newgameslist[i][0],
+                             '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + newgameslist[i][0] +'/capsule_184x69.jpg")', 
+                             newgameslist[i][1],
+                             "FALSE",
+                             newgameslist[i][2]])
     }
   }
   lock.releaseLock();
   
   DPSort();
-  
+}
+
+function DataImporter()
+{
+  var localsheet = SHEETS[2];
+  var idarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
+  var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=0", "$.response.games[*]", "appid, playtime_forever, playtime_2weeks");
+
 }
 
