@@ -34,7 +34,7 @@ function DataImporter()
   
   // deletion phase
   var localarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
-  if (idarray.legnth > 0) 
+  if (idarray.length > 0) 
   {
     for (var i = 0; i < idarray.length; i++)
     {
@@ -57,11 +57,11 @@ function DataImporter()
        localsheet.appendRow([importarray[i][0],
                              '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + importarray[i][0] +'/capsule_184x69.jpg")', 
                              importarray[i][1],
-                             importarray[i][2],
-                             importarray[i][3]
+                             importarray[i][2]
                            ]);
     }
     DPSort();
+    CombinedTimePuller();
   }
 }
 
