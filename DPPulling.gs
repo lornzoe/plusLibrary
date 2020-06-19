@@ -35,6 +35,7 @@ function MyLibUpdater()
   
   // importarray leftover: import.
   {
+    let backupsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
     let cellrule = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup").getRange("B2").getDataValidation();
     for (let i = 0; i < importarray.length; i++)
     {
@@ -66,6 +67,27 @@ function MyLibUpdater()
       SHEETS[1].getRange(refrow, 2).insertCheckboxes();
       SHEETS[1].getRange(refrow, 11).insertCheckboxes();
       SHEETS[1].getRange(refrow, 9).setDataValidation(cellrule);
+      
+      // check if it already exists in the backup database
+      // if not, add it there.
+      let backuparray = backupsheet.getRange("C6:C").getValues();
+      
+      // else add a new row of the game
+      for (let i = 0; i < backuparray.length; i++)
+      {
+        if (backuparray[i] == refid)
+        {
+          // if id exists on backuparray, we use said value to override the variables
+          let backups = backupsheet.getRange(i + 6, 5, 1, 5).getValues()
+          SHEETS[1].getRange(refrow, 9, 1, 4).setValues([backups[3], backups[0], backups[1], backups[2]]);
+          SHEETS[1].getRange(refrow, 17).setValue(backups[4]);
+          break;
+        }
+        if ( i == backuparray.length -1) 
+        {
+          backupsheet.appendRow([ '', '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")', refid, "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"]);
+        }
+      }
     }
   }
 }
