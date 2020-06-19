@@ -36,7 +36,7 @@ function StorePriceUpdater()
         else
           localsheet.getRange(i+2 , 6).setValue("UNK_VAL");
         
-        continue;
+        break;
       }
     }
   }
