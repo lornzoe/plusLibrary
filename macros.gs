@@ -16,9 +16,3 @@ function LibSort() {
   spreadsheet.getRange('B5:V').activate();
   spreadsheet.getActiveRange().offset(1, 0, spreadsheet.getActiveRange().getNumRows() - 1).sort({column: 3, ascending: true});
 };
-
-function Untitledmacro() {
-  var spreadsheet = SpreadsheetApp.getActive();
-  spreadsheet.getRange('43:43').activate();
-  spreadsheet.getActiveSheet().setRowHeight(43, 48);
-};
