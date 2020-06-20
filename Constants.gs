@@ -25,5 +25,5 @@ var USERID = SHEETS[4].getRange("A2").getValue();
 var APIKEY = SHEETS[4].getRange("B2").getValue();
 
 var GAMEROWHEIGHT = 48;
-var FORMATRANGE = SHEETS[1].getRange("B4:S4")
+var FORMATRANGE = SHEETS[1].getRange("B4:V4")
 

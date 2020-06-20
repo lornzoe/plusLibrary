@@ -35,6 +35,7 @@ function MyLibUpdater()
   }  
   
   // importarray leftover: import.
+  if (importarray.length > 0)
   {
     let backupsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
     let cellrule = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup").getRange("B2").getDataValidation();
@@ -61,9 +62,11 @@ function MyLibUpdater()
                           , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 9, FALSE)"
                           , '' 
                           , "=IF(F"+refrow+">1, IFERROR(Q"+refrow+"/F"+refrow+",Q"+refrow+"), Q"+refrow+")"
-                          , ''
+                          , "=IF(ISNUMBER(U" + refrow + "), U" + refrow + ", V" + refrow + ")"
                           , "=I"+refrow+"-Q"+refrow+""
-                          , "=IFERROR(R"+refrow+"/Q"+refrow+",R"+refrow+"/1)" ]);
+                          , "=IFERROR(R"+refrow+"/Q"+refrow+",R"+refrow+"/1)"
+                          , ''
+                          , "=TRANSPOSE(CheckStorePrice(D" + refrow + "))"]);
             
      
       
@@ -80,7 +83,7 @@ function MyLibUpdater()
           // if id exists on backuparray, we use said value to override the variables
           let backups;
           backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 17),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
+          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 22),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
 
           break;
@@ -94,7 +97,7 @@ function MyLibUpdater()
       SHEETS[1].getRange(refrow, 12).insertCheckboxes();
       SHEETS[1].getRange(refrow, 10).setDataValidation(cellrule);
     }
-    FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 19, 6, SHEETS[1].getMaxRows())
+    FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 22, 6, SHEETS[1].getMaxRows())
     SHEETS[1].setRowHeights(6, SHEETS[1].getMaxRows() - 5, GAMEROWHEIGHT)
   }
 }
