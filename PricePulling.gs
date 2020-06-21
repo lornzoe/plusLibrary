@@ -10,7 +10,7 @@ function StorePriceUpdater()
   var apilink = "http://store.steampowered.com/api/appdetails?appids=";
   var iterationcount = SHEETS[4].getRange("E2").getValue();
   var iterations = 0;
-  for (var i = iterationcount; (i < localarray.length) && (i - iterationcount < 100); i++)
+  for (var i = iterationcount; (i < localarray.length) && (i - iterationcount < ITERATIONLIMIT); i++)
   {
     apilink += '' + localarray[i]
     apilink += ','

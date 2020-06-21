@@ -16,7 +16,7 @@ function AchievementUpdater()
     iterationcount++;
     SHEETS[4].getRange('D2').setValue(currentcounter + iterationcount);
 
-    if (iterationcount >= 100)
+    if (iterationcount >= ITERATIONLIMIT)
       break;
   }
  

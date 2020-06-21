@@ -1,4 +1,6 @@
 function CheckStorePrice(appid) {
+  Utilities.sleep(Math.random() * 5000);
+
   let sourcearray = SHEETS[2].getRange("A2:F").getValues();
   
     for(let i = 0; i < sourcearray.length; i++)

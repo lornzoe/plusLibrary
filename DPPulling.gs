@@ -39,7 +39,7 @@ function MyLibUpdater()
   {
     let backupsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
     let cellrule = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup").getRange("B2").getDataValidation();
-    for (let i = 0; i < importarray.length && i <= 100; i++) // iteration limit
+    for (let i = 0; i < importarray.length && i <= ITERATIONLIMIT; i++) // iteration limit
     {
       let refid = importarray[i][0];
       let refrow = SHEETS[1].getMaxRows() + 1;
@@ -85,6 +85,7 @@ function MyLibUpdater()
           backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 22),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
+          backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
 
           break;
         }

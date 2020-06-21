@@ -27,3 +27,5 @@ var APIKEY = SHEETS[4].getRange("B2").getValue();
 var GAMEROWHEIGHT = 48;
 var FORMATRANGE = SHEETS[1].getRange("B4:V4")
 
+var ITERATIONLIMIT = 75;
+
