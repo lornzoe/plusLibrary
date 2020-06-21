@@ -2,6 +2,7 @@ function onEdit(e)
 {
   let name = e.range.getSheet().getSheetName();
   Logger.log(e.value)
+  
   if (name == "1 - MyLibrary")
     onMyLibEdit(e);
   
@@ -15,6 +16,7 @@ function onMyLibEdit(e)
   
   if (row == 3)
   {
+    Logger.log("if (row == 3)")
     if (col == 2) // show blacklist
     {
       let range = SHEETS[1].getRange("B6:B").getValues();
@@ -55,15 +57,19 @@ function onMyLibEdit(e)
   
   if(row>=6)
   {
+    Logger.log("if (row >= 6)")
+    
     let rtf = -1;
     switch(col)
     {
       case 2:
-        if (SHEETS[1].getRange("B3").getValue() == "FALSE")
+        if (SHEETS[1].getRange("B3").getValue() == false)
         {
           if(e.value == "TRUE")
-            SHEETS[1].hideRow(e.range)
-            }
+          {
+            SHEETS[1].hideRows(row)
+          }
+        }
         rtf = 10;
         break;
       case 9:
@@ -84,22 +90,23 @@ function onMyLibEdit(e)
       default:
         break;
     }
-    if (rtf == -1) 
-      return;
     
     let refid = SHEETS[1].getRange(row, 4).getValue()
-    let backupsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
-    let backuparray = backupsheet.getRange("A6:A")
+    Logger.log("doing cleanup, update id = ", refid + '')
     
-          for (let i = 0; i < backuparray.length; i++)
+    let backupsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
+    let backuparray = backupsheet.getRange("C6:C").getValues()
+    Logger.log(backuparray[0][0])
+    for (let i = 0; i < backuparray.length; i++)
+    {
+      if (backuparray[i][0]+ '' == refid+'')
       {
-        if (backuparray[i][0] == refid)
-        {
-          // if id exists on backuparray, we use said value to override the variables
-          backupsheet.getRange(i+6, rtf).setValue(e.value)
-          break;
-        }
+        Logger.log("found match")
+        // if id exists on backuparray, we use said value to override the variables
+        backupsheet.getRange(i+6, rtf).setValue(e.value)
+        break;
       }
+    }
     
     return;
   }

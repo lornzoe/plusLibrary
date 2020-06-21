@@ -1,10 +1,10 @@
-
-
 var OVERVIEW = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0 - Overview");
 var MYLIBRARY= SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary");
 var DATAPROCESSING = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("2 - DataProcessing");
 var EXCEPTIONLIST = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("3 - ExceptionList");
 var PLAYERSTATS = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("4 - PlayerStats");
+
+var BKUPSHEET = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
 
 var SHEETS = new Array();
 SHEETS = [OVERVIEW, MYLIBRARY, DATAPROCESSING, EXCEPTIONLIST, PLAYERSTATS];
@@ -26,6 +26,6 @@ var APIKEY = SHEETS[4].getRange("B2").getValue();
 
 var GAMEROWHEIGHT = 48;
 var FORMATRANGE = SHEETS[1].getRange("B4:V4")
-
+var BKUPFORMATRANGE = BKUPSHEET.getRange("B4:J4")
 var ITERATIONLIMIT = 75;
 

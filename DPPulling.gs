@@ -91,7 +91,9 @@ function MyLibUpdater()
         }
         if ( i == backuparray.length -1) 
         {
-          backupsheet.appendRow([ '', '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")', refid, "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"]);
+          backupsheet.appendRow([ '', '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")', refid, "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)",'',"FALSE",'','',"FALSE"]);
+          BKUPFORMATRANGE.copyFormatToRange(BKUPSHEET,2,10,BKUPSHEET.getMaxRows(), BKUPSHEET.getMaxRows())
+          BKUPSHEET.getRange(BKUPFSHEET.getMaxRows(),2,1,10).setDataValidations(BKUPFORMATRANGE.getDataValidations())
         }
       }
       SHEETS[1].getRange(refrow, 2).insertCheckboxes();
