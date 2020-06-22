@@ -1,11 +1,12 @@
 function PlayerStatsPuller() {
 
   var localsheet = SHEETS[4];
+
   localsheet.getRange("A5").setValue(getPlayedGameCount());
   localsheet.getRange("B5").setValue(gameCount());
-  
+
   localsheet.getRange("A8:E8").setValues(getPlayerLevelSummary());
-  localsheet.getRange("A11:C11").setValues(accCreationSummarise(1397882446))
+  getPlayerSummaries()
 }
 
 function gameCount()
@@ -18,7 +19,7 @@ function gameCount()
 
 function GetLibrarylist()
 {
-   var ss2 = SHEETS[1].getRange("C6:C").getValues()
+   var ss2 = SHEETS[1].getRange("D6:D").getValues()
   var array2 = ss2.reduce(function(ar,e) {
     if (e[0])
       ar.push(e[0])
@@ -31,7 +32,7 @@ function GetLibrarylist()
 function getTimePlayedList()
 
 {
-    var ss2 = SHEETS[1].getRange("K6:K").getValues()
+    var ss2 = SHEETS[1].getRange("F6:F").getValues()
   var array2 = ss2.reduce(function(ar,e) {
     if (e[0] != "#N/A")
       ar.push(e[0])
@@ -136,4 +137,15 @@ function accCreationSummarise(unix_timestamp)
   doc2 = unixtimestamptodatestring(parseFloat(unix_timestamp) + parseFloat(28800));
   timestamps[0][2] = doc2[1];
   return timestamps;
+}
+
+function getPlayerSummaries()
+{
+  var localsheet = SHEETS[4];
+
+  let arr = IMPORTJSONAPI("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=" + APIKEY + "&steamids=" + USERID, "$.response.players[*]", "personaname, avatarfull, timecreated" )
+  Logger.log(arr)
+  localsheet.getRange("E4").setValue(arr[0][0]);
+  localsheet.getRange("E5").setValue('=IMAGE("' +arr[0][1] +'")')
+  localsheet.getRange("A11:C11").setValues(accCreationSummarise(arr[0][2]))
 }
