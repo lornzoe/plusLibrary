@@ -36,9 +36,9 @@ function getAchievementStats(appid)
   else
     returnarray[0] = 0;
 
-  puller = IMPORTJSONAPI("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=582010","$.achievementpercentages.achievements[*]", "@");
+  puller = IMPORTJSONAPI("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=" + appid,"$.achievementpercentages.achievements[*]", "@");
 
-  if (returnarray[0] != 0  && puller != null)
+  if (puller != null)
   {
     returnarray[1] = puller.length;
     returnarray[2] = returnarray[0]/returnarray[1];

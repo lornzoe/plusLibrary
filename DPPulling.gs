@@ -98,7 +98,7 @@ function MyLibUpdater()
       SHEETS[1].getRange(refrow, 10).setDataValidation(cellrule);
     }
     FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 22, 6, SHEETS[1].getMaxRows())
-    SHEETS[1].setRowHeights(6, SHEETS[1].getMaxRows() - 5, GAMEROWHEIGHT)
+    //SHEETS[1].setRowHeights(6, SHEETS[1].getMaxRows() - 5, GAMEROWHEIGHT)
     
     SHEETS[1].getRange(6, 3, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, true)
     SHEETS[1].getRange(6, 6, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, false)
