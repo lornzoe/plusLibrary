@@ -50,26 +50,23 @@ function MyLibUpdater()
                            , "FALSE"
                            , '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")'
                            , refid
-                          , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
-                          , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:D, 4, FALSE)/60"
-                          , "=IFERROR(VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE)/60, VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE))"
-                          , "=IF(F" + refrow + " >1, IFERROR(I" + refrow + "/F" + refrow + ", I" + refrow + "), I" + refrow + ")"
-                          , ''
-                          , '' 
-                          , '' 
-                          , "FALSE"
-                          , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A:L, 7, FALSE) & " + '" / "' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 8, FALSE)"
-                          , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 9, FALSE)"
-                          , '' 
-                          , "=IF(F"+refrow+">1, IFERROR(Q"+refrow+"/F"+refrow+",Q"+refrow+"), Q"+refrow+")"
-                          , "=IF(ISNUMBER(U" + refrow + "), U" + refrow + ", V" + refrow + ")"
-                          , "=I"+refrow+"-Q"+refrow+""
-                          , "=IFERROR(R"+refrow+"/Q"+refrow+",R"+refrow+"/1)"
-                          , ''
-                          , "=TRANSPOSE(CheckStorePrice(D" + refrow + "))"]);
-            
-     
-      
+                           , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
+                           , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:D, 4, FALSE)/60"
+                           , "=IFERROR(VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE)/60, VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE))"
+                           , "=IF(F" + refrow + " >1, IFERROR(I" + refrow + "/F" + refrow + ", I" + refrow + "), I" + refrow + ")"
+                           , ''
+                           , '' 
+                           , '' 
+                           , "FALSE"
+                           , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A:L, 7, FALSE) & " + '" / "' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 8, FALSE)"
+                           , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 9, FALSE)"
+                           , '' 
+                           , "=IF(F"+refrow+">1, IFERROR(Q"+refrow+"/F"+refrow+",Q"+refrow+"), Q"+refrow+")"
+                           , "=IF(ISNUMBER(U" + refrow + "), U" + refrow + ", V" + refrow + ")"
+                           , "=I"+refrow+"-Q"+refrow+""
+                           , "=IFERROR(R"+refrow+"/Q"+refrow+",R"+refrow+"/1)"
+                           , ''
+                           , "=TRANSPOSE(CheckStorePrice(D" + refrow + "))"]);  
       
       // check if it already exists in the backup database
       // if not, add it there.
@@ -86,7 +83,7 @@ function MyLibUpdater()
           backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 22),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-
+          
           break;
         }
         if ( i == backuparray.length -1) 
@@ -102,5 +99,17 @@ function MyLibUpdater()
     }
     FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 22, 6, SHEETS[1].getMaxRows())
     SHEETS[1].setRowHeights(6, SHEETS[1].getMaxRows() - 5, GAMEROWHEIGHT)
+    
+    SHEETS[1].getRange(6, 3, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, true)
+    SHEETS[1].getRange(6, 6, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, false)
+    SHEETS[1].getRange(6, 9, SHEETS[1].getMaxRows() - 6, 1).setBorder(true, true, true, true, false, true)
+    SHEETS[1].getRange(6, 10, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, true)
+    SHEETS[1].getRange(6, 13, SHEETS[1].getMaxRows() - 6, 2).setBorder(true, true, true, true, false, true)
+    SHEETS[1].getRange(6, 16, SHEETS[1].getMaxRows() - 6, 4).setBorder(true, true, true, true, false, true)
+    
+    SHEETS[4].getRange("A5").setValue(getPlayedGameCount());
+    SHEETS[4].getRange("B5").setValue(gameCount());
+    OverviewAdjust()
+     
   }
 }

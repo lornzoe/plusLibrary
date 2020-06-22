@@ -63,6 +63,7 @@ function onMyLibEdit(e)
     switch(col)
     {
       case 2:
+        OverviewAdjust()
         if (SHEETS[1].getRange("B3").getValue() == false)
         {
           if(e.value == "TRUE")
