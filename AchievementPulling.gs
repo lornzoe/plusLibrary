@@ -15,11 +15,11 @@ function AchievementUpdater()
     
     iterationcount++;
     SHEETS[4].getRange('D2').setValue(currentcounter + iterationcount);
-
+    
     if (iterationcount >= ITERATIONLIMIT)
       break;
   }
- 
+  
   currentcounter = SHEETS[4].getRange("D2").getValue();
   if (currentcounter >= (SHEETS[4].getRange("C2").getValue()))
   {
@@ -30,23 +30,26 @@ function AchievementUpdater()
 function getAchievementStats(appid) 
 {  
   var returnarray = new Array();
+  
   var puller =  IMPORTJSONAPI("http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=" + appid + "&key=" + APIKEY + "&steamid="+ USERID,"$.playerstats.achievements[*]", "@");
   if (puller != null)
     returnarray[0] = puller.length;
   else
     returnarray[0] = 0;
-
+  
   puller = IMPORTJSONAPI("http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=" + appid,"$.achievementpercentages.achievements[*]", "@");
-
-  if (puller != null)
+  
+  if (puller != null && !puller[0][0].includes("ERROR"))
   {
     returnarray[1] = puller.length;
     returnarray[2] = returnarray[0]/returnarray[1];
   }
   else
   {
+    returnarray[0] = 0;
     returnarray[1] = 0;
     returnarray[2] = '-';
   }  
+  
   return returnarray;
 }
