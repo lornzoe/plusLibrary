@@ -5,7 +5,7 @@ function DataImporter()
   var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=1", "$.response.games[*]", "appid, name, playtime_forever, playtime_2weeks");
   var exceptionsheet = SHEETS[3];
   var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns()).getValues();
-
+  
   // binding exceptionarray to importarray
   for (var i = 1; i < exceptionarray.length; i++)
   {
@@ -22,7 +22,7 @@ function DataImporter()
   {
     for (var j = idarray.length-1; j >= 0; j--)
     {
-      if (idarray[j] + '' == importarray[i][0] + '')
+      if (idarray[j][0] + '' == importarray[i][0] + '')
       {
         idarray.splice(j, 1);
         importarray.splice(i, 1);
@@ -33,36 +33,55 @@ function DataImporter()
   }
   
   // deletion phase
-  var localarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
+  Logger.log("--beginning deletion phase")
+  Logger.log(idarray)
   if (idarray.length > 0) 
   {
-    for (var i = 0; i < idarray.length; i++)
+    for (let i = 0; i < idarray.length; i++)
     {
-      for (var j =localarray.length -1; j >= 0; j--)
+      let searcher = SHEETS[2].getRange(2, 1, localsheet.getMaxRows()).getValues();
+      let indextarget = searcher.indexOf(parseInt(idarray[i][0]));
+      if (indextarget != -1)
       {
-        if (idarray[i] == localarray[j])
+        localsheet.deleteRow(indextarget+2);
+        continue;
+      }
+      
+      else
+      {
+        searcher = SHEETS[2].getRange(2, 1, localsheet.getMaxRows()-1).getValues();
+        for (let j = 0; j < searcher.length; j++)
         {
-          localsheet.deleteRow(j+1);
-          break;
+          if (idarray[i][0] + '' == searcher[j] + '')
+          {
+            localsheet.deleteRow(j+2);
+            break;
+          }
         }
+        continue;
       }
     }
   }
+  Logger.log("--finished deletion phase")
   
   //addition phase
+  Logger.log("++starting addition phase")
+  Logger.log(importarray)
   if(importarray.length > 0)
   {
     for (var i = 0; i < importarray.length; i++)
     {
-       localsheet.appendRow([importarray[i][0],
-                             '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + importarray[i][0] +'/capsule_184x69.jpg")', 
-                             importarray[i][1],
-                             importarray[i][2]
+      localsheet.appendRow([importarray[i][0],
+                            '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + importarray[i][0] +'/capsule_184x69.jpg")', 
+                           importarray[i][1],
+                           importarray[i][2]
                            ]);
     }
-    DPSort();
-    CombinedTimePuller();
   }
+  Logger.log("++finished addition phase")
+  DPSort();
+  CombinedTimePuller();
+  
 }
 
 function DPSort() {
