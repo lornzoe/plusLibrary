@@ -18,21 +18,33 @@ function MyLibUpdater()
   }
   
   // mainarray leftover: delete.
+  Logger.log("--delete mainarray leftovers")
+  Logger.log(mainarray)
   if(SHEETS[1].getMaxRows() > 5) 
   {
-    let referencearray = SHEETS[1].getRange("D6:D").getValues();
     for (let j = mainarray.length -1; j >= 0; j--)
     {
+      let referencearray = SHEETS[1].getRange("D6:D").getValues();
+      let indextarget = referencearray.indexOf(mainarray[j])
+      if(indextarget != -1)
+      {
+        SHEETS[1].deleteRow(k+6);
+        continue;
+
+      }
+      
       for (let k = referencearray.length-1; k >=0; k--)
       {
-        if (referencearray[k][0] == mainarray[j][0])
+        if (referencearray[k]+'' == mainarray[j]+'')
         {
           SHEETS[1].deleteRow(k+6);
           break;
         }
       }
     }
-  }  
+  }
+  Logger.log("--finish delete")
+
   
   // importarray leftover: import.
   if (importarray.length > 0)
