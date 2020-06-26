@@ -3,7 +3,11 @@ function AchievementUpdater()
   var localsheet = SHEETS[2]
   var idarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues()
   var currentcounter = SHEETS[4].getRange("D2").getValue();
-  
+  if (currentcounter >= (SHEETS[4].getRange("C2").getValue()))
+  {
+    SHEETS[4].getRange("D2").setValue('0');
+    currentcounter = SHEETS[4].getRange("D2").getValue();
+  }
   var iterationcount = 0;
   //now get an array of achievement stats
   for (var i = currentcounter; i < idarray.length - 1 ; i++)
