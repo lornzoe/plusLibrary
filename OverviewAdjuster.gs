@@ -26,9 +26,12 @@ function OverviewAdjust()
     Logger.log("APPROACH TAKEN: APPENDROW()")
     
     discriminant *= -1;
-    for (let i = discriminant; i > 0; i--)
+      Logger.log(discriminant)
+
+    for (var i = discriminant; i > 0; i--)
     {
-      SHEETS[0].appendRow(['']);      
+      Logger.log(i)
+      SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0 - Overview").appendRow(['']);      
     }
   }
   
