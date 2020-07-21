@@ -2,6 +2,7 @@ function MyLibUpdater()
 {
   var mainarray = SHEETS[1].getRange("D6:D").getValues();
   var importarray = SHEETS[2].getRange("A2:A").getValues();
+  var importarray2 = SHEETS[2].getRange("C2:C").getValues();
   
   for (let i = importarray.length-1; i >= 0; i--)
   {
@@ -53,6 +54,7 @@ function MyLibUpdater()
     for (let i = 0; i < importarray.length && i <= ITERATIONLIMIT; i++) // iteration limit
     {
       let refid = importarray[i][0];
+      let refname = importarray2[i][0]
       let refrow = SHEETS[1].getMaxRows() + 1;
       
       SHEETS[0].appendRow(['']);
@@ -61,7 +63,7 @@ function MyLibUpdater()
                            , "FALSE"
                            , '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")'
                            , refid
-                           , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
+                           , refname
                            , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:D, 4, FALSE)/60"
                            , "=IFERROR(VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE)/60, VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE))"
                            , "=IF(F" + refrow + " >1, IFERROR(I" + refrow + "/F" + refrow + ", I" + refrow + "), I" + refrow + ")"
@@ -99,7 +101,19 @@ function MyLibUpdater()
         }
         if ( i == backuparray.length -1) 
         {
-          backupsheet.appendRow([ '', '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")', refid, "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)",'',"FALSE",'','',"FALSE"]);
+          backupsheet.appendRow([
+            '',
+            '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")',
+            refid,
+            refname,
+            '',
+            '',
+            "FALSE",
+            '',
+            '',
+            "FALSE",
+            "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
+          ]);
           BKUPFORMATRANGE.copyFormatToRange(BKUPSHEET,2,10,BKUPSHEET.getMaxRows(), BKUPSHEET.getMaxRows())
           BKUPSHEET.getRange(BKUPSHEET.getMaxRows(),2,1,10).setDataValidations(BKUPFORMATRANGE.getDataValidations())
         }
@@ -120,7 +134,7 @@ function MyLibUpdater()
     
     SHEETS[4].getRange("A5").setValue(getPlayedGameCount());
     SHEETS[4].getRange("B5").setValue(gameCount());
-    OverviewAdjust()
+    OverviewAdjust() 
      
   }
 }
