@@ -1,5 +1,5 @@
 function CheckStorePrice(appid) {
-  Utilities.sleep(Math.random() * 5000);
+  Utilities.sleep(Math.random() * 10000);
 
   let sourcearray = SHEETS[2].getRange("A2:F").getValues();
   
