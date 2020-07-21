@@ -2,7 +2,7 @@ function ReplaceBackupFormulaWithName() {
   
   let val = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
   
-  for (var i = 6; i < val.getMaxRows(); i++)
+  for (var i = 6; i <= val.getMaxRows(); i++)
   {
     // check value of Dx    
     let value = val.getRange(i,4).getValue()
