@@ -12,6 +12,7 @@ function MyLibUpdater()
       {
         mainarray.splice(j, 1);
         importarray.splice(i, 1);
+        importarray2.splice(i, 1);
         
         break;
       }
@@ -31,7 +32,7 @@ function MyLibUpdater()
       {
         SHEETS[1].deleteRow(k+6);
         continue;
-
+        
       }
       
       for (let k = referencearray.length-1; k >=0; k--)
@@ -115,6 +116,7 @@ function MyLibUpdater()
             "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
           ]);
           BKUPFORMATRANGE.copyFormatToRange(BKUPSHEET,2,10,BKUPSHEET.getMaxRows(), BKUPSHEET.getMaxRows())
+          
           BKUPSHEET.getRange(BKUPSHEET.getMaxRows(),2,1,10).setDataValidations(BKUPFORMATRANGE.getDataValidations())
         }
       }
@@ -135,6 +137,6 @@ function MyLibUpdater()
     SHEETS[4].getRange("A5").setValue(getPlayedGameCount());
     SHEETS[4].getRange("B5").setValue(gameCount());
     OverviewAdjust() 
-     
+    
   }
 }
