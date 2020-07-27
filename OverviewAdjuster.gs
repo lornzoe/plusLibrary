@@ -26,19 +26,20 @@ function OverviewAdjust()
     Logger.log("APPROACH TAKEN: APPENDROW()")
     
     discriminant *= -1;
-      Logger.log(discriminant)
-
-    for (var i = discriminant; i > 0; i--)
-    {
-      Logger.log(i)
-      SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0 - Overview").appendRow(['']);      
-    }
+    Logger.log(discriminant);
+    
+    SHEETS[0].insertRowsAfter(17, discriminant)
+    //for (var i = discriminant; i > 0; i--)
+    //{
+    //  Logger.log(i)
+    //  SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0 - Overview").appendRow(['']);      
+    //}
   }
   
   else
   {
     Logger.log("APPROACH TAKEN: NIL")
-
+    
   }
   
   // border formatting
@@ -50,7 +51,10 @@ function OverviewAdjust()
   SHEETS[0].getRange(17, 12, SHEETS[0].getMaxRows() - 17, 2).setBorder(true, true, true, true, false, true);
   SHEETS[0].getRange(17, 15, SHEETS[0].getMaxRows() - 17, 4).setBorder(true, true, true, true, false, true);
   //SHEETS[0].getRange(17, 6, SHEETS[0].getMaxRows() - 17, 1).setBorder(true, true, true, true, null, false);
+  SHEETS[0].getRange(17, 15, SHEETS[0].getMaxRows() - 17, 4).setBorder(true, true, true, true, false, true);
   
+  SHEETS[0].getRange(SHEETS[0].getMaxRows(),2,1,12).setBorder(true, false, false, false, false, false).clearFormat()
+  SHEETS[0].getRange(SHEETS[0].getMaxRows(),15,1,4).setBorder(true, false, false, false, false, false).clearFormat()
   // checkbox formatting
   SHEETS[0].getRange(17, 11, SHEETS[0].getMaxRows() - 17, 1).insertCheckboxes().setValue("");
   SHEETS[0].getRange(SHEETS[0].getMaxRows(), 11).removeCheckboxes().setValue("");
