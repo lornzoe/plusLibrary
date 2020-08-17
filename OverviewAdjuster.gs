@@ -49,12 +49,17 @@ function OverviewAdjust()
   SHEETS[0].getRange(17, 9, SHEETS[0].getMaxRows() - 17, 5).setBorder(true, true, true, true, false, true);
   
   SHEETS[0].getRange(17, 12, SHEETS[0].getMaxRows() - 17, 2).setBorder(true, true, true, true, false, true);
-  SHEETS[0].getRange(17, 15, SHEETS[0].getMaxRows() - 17, 4).setBorder(true, true, true, true, false, true);
+  SHEETS[0].getRange(17, 17, SHEETS[0].getMaxRows() - 17, 4).setBorder(true, true, true, true, false, true);
   //SHEETS[0].getRange(17, 6, SHEETS[0].getMaxRows() - 17, 1).setBorder(true, true, true, true, null, false);
-  SHEETS[0].getRange(17, 15, SHEETS[0].getMaxRows() - 17, 4).setBorder(true, true, true, true, false, true);
+  SHEETS[0].getRange(17, 17, SHEETS[0].getMaxRows() - 17, 4).setBorder(true, true, true, true, false, true);
   
+  SHEETS[0].getRange(17, 15, SHEETS[0].getMaxRows() - 17, 1).setBorder(true, true, true, true, false, true);
+
+  // clear the bottom format and remove borders
   SHEETS[0].getRange(SHEETS[0].getMaxRows(),2,1,12).setBorder(true, false, false, false, false, false).clearFormat()
-  SHEETS[0].getRange(SHEETS[0].getMaxRows(),15,1,4).setBorder(true, false, false, false, false, false).clearFormat()
+  SHEETS[0].getRange(SHEETS[0].getMaxRows(),17,1,4).setBorder(true, false, false, false, false, false).clearFormat()
+  SHEETS[0].getRange(SHEETS[0].getMaxRows(),15,1,1).setBorder(true, false, false, false, false, false).clearFormat()
+
   // checkbox formatting
   SHEETS[0].getRange(17, 11, SHEETS[0].getMaxRows() - 17, 1).insertCheckboxes().setValue("");
   SHEETS[0].getRange(SHEETS[0].getMaxRows(), 11).removeCheckboxes().setValue("");
