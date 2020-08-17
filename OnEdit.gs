@@ -41,17 +41,17 @@ function onMyLibEdit(e)
       }
     }
     
-    else if (col == 3)
+    else if (col == 3) // hide unnecessary rows
     {
       if (e.value == "TRUE")
       {
-        SHEETS[1].showColumns(1,22)
+        SHEETS[1].showColumns(1,24)
       }
       else
       {
-        SHEETS[1].hideColumns(6,3)
-        SHEETS[1].hideColumns(13,2)
-        SHEETS[1].hideColumns(16,6)
+        SHEETS[1].hideColumns(6,3) // hours played group
+        SHEETS[1].hideColumns(13,2) // achievement group
+        SHEETS[1].hideColumns(18,6) //original price group
       }
     }
     
