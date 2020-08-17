@@ -74,6 +74,8 @@ function MyLibUpdater()
                            , "FALSE"
                            , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A:L, 7, FALSE) & " + '" / "' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 8, FALSE)"
                            , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 9, FALSE)"
+                           , ''
+                           , ''
                            , '' 
                            , "=IF(F"+refrow+">1, IFERROR(Q"+refrow+"/F"+refrow+",Q"+refrow+"), Q"+refrow+")"
                            , "=IF(ISNUMBER(U" + refrow + "), U" + refrow + ", V" + refrow + ")"
@@ -113,7 +115,8 @@ function MyLibUpdater()
             '',
             '',
             "FALSE",
-            "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
+            "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)",
+            ''
           ]);
           BKUPFORMATRANGE.copyFormatToRange(BKUPSHEET,2,10,BKUPSHEET.getMaxRows(), BKUPSHEET.getMaxRows())
           
