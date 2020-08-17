@@ -96,7 +96,7 @@ function MyLibUpdater()
           // if id exists on backuparray, we use said value to override the variables
           let backups;
           backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 22),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
+          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 24),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           
@@ -127,7 +127,7 @@ function MyLibUpdater()
       SHEETS[1].getRange(refrow, 12).insertCheckboxes();
       SHEETS[1].getRange(refrow, 10).setDataValidation(cellrule);
     }
-    FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 22, 6, SHEETS[1].getMaxRows())
+    FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 24, 6, SHEETS[1].getMaxRows())
     //SHEETS[1].setRowHeights(6, SHEETS[1].getMaxRows() - 5, GAMEROWHEIGHT)
     
     SHEETS[1].getRange(6, 3, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, true)
@@ -135,7 +135,7 @@ function MyLibUpdater()
     SHEETS[1].getRange(6, 9, SHEETS[1].getMaxRows() - 6, 1).setBorder(true, true, true, true, false, true)
     SHEETS[1].getRange(6, 10, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, true)
     SHEETS[1].getRange(6, 13, SHEETS[1].getMaxRows() - 6, 2).setBorder(true, true, true, true, false, true)
-    SHEETS[1].getRange(6, 16, SHEETS[1].getMaxRows() - 6, 4).setBorder(true, true, true, true, false, true)
+    SHEETS[1].getRange(6, 18, SHEETS[1].getMaxRows() - 6, 4).setBorder(true, true, true, true, false, true)
     
     SHEETS[4].getRange("A5").setValue(getPlayedGameCount());
     SHEETS[4].getRange("B5").setValue(gameCount());
