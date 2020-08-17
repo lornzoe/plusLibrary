@@ -88,8 +88,11 @@ function onMyLibEdit(e)
       case 12:
         rtf = 7;
         break;
-      case 22:
+      case 24:
         rtf = 9;
+        break;
+      case 16:
+        rtf = 12;
         break;
       default:
         break;
