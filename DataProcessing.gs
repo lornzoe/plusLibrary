@@ -12,7 +12,7 @@ function DataImporter()
     importarray.push(new Array())
     importarray[importarray.length-1][0] = exceptionarray[i][0];
     importarray[importarray.length-1][1] = exceptionarray[i][1];
-    importarray[importarray.length-1][2] = '';
+    importarray[importarray.length-1][2] = exceptionarray[i][2];
     importarray[importarray.length-1][3] = ''; 
     Logger.log(importarray[importarray.length-1])
   }

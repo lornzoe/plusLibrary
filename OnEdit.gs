@@ -1,5 +1,8 @@
 function onEdit(e)
 {
+  Logger.log("maintentence period")
+  return;
+  
   let name = e.range.getSheet().getSheetName();
   Logger.log(e.value)
   
