@@ -96,13 +96,13 @@ function MyLibUpdater()
           // if id exists on backuparray, we use said value to override the variables
           let backups;
           backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 24),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
+          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 26),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          
+          backups = backupsheet.getrange(i + 6, 12).copyTo(SHEETS[1].getRange(refrow, 16),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           break;
         }
-        if ( i == backuparray.length -1) 
+        if ( i == backuparray.length -1 && backuparray[i][0] != refid) 
         {
           backupsheet.appendRow([
             '',
