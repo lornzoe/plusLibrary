@@ -1,13 +1,14 @@
 function MyLibUpdater()
 {
-  var mainarray = SHEETS[1].getRange("D6:D").getValues();
-  var importarray = SHEETS[2].getRange("A2:A").getValues();
-  var importarray2 = SHEETS[2].getRange("C2:C").getValues();
+  var mainarray = SHEETS[1].getRange("D6:D").getValues(); //get appid list from library
+  var importarray = SHEETS[2].getRange("A2:A").getValues(); // get appid list from dataprocessing
+  var importarray2 = SHEETS[2].getRange("C2:C").getValues(); // get name list from dataprocessing
   
   for (let i = importarray.length-1; i >= 0; i--)
   {
     for (let j = mainarray.length-1; j >= 0; j--)
     {
+      // if the appid matches, delete entries from both sides
       if (mainarray[j][0] + '' == importarray[i][0] + '')
       {
         mainarray.splice(j, 1);
@@ -95,9 +96,9 @@ function MyLibUpdater()
         {
           // if id exists on backuparray, we use said value to override the variables
           let backups;
-          backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 26),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
+          backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES); // cost
+          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 24),SpreadsheetApp.CopyPasteType.PASTE_VALUES); // manual store price
+          backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES); //nzoscore, thoughts, tickmark
           backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 12).copyTo(SHEETS[1].getRange(refrow, 16),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           break;
