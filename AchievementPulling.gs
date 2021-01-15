@@ -57,3 +57,17 @@ function getAchievementStats(appid)
   
   return returnarray;
 }
+
+function RecentGameAchievementPulling() {
+  for (var i = 2; i <= SHEETS[2].getMaxRows(); i++)
+  {
+    let check = SHEETS[2].getRange(i, 5).getValue()
+    if (check == '-')
+      continue;
+    
+    let acharray = getAchievementStats(SHEETS[2].getRange(i,1).getValue())
+    SHEETS[2].getRange(i, 7).setValue(acharray[0])
+    SHEETS[2].getRange(i, 8).setValue(acharray[1])
+    SHEETS[2].getRange(i, 9).setValue(acharray[2]).setNumberFormat("0.00%")
+  }
+}

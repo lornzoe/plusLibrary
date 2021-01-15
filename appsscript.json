@@ -1,0 +1,48 @@
+{
+  "timeZone": "Asia/Hong_Kong",
+  "dependencies": {
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": ["https://www.googleapis.com/auth/spreadsheets.currentonly", "https://www.googleapis.com/auth/script.external_request", "https://www.googleapis.com/auth/spreadsheets"],
+  "runtimeVersion": "V8",
+  "sheets": {
+    "macros": [{
+      "menuName": "Sort shit",
+      "functionName": "Sortshit"
+    }, {
+      "menuName": "DPSort",
+      "functionName": "DPSort"
+    }, {
+      "menuName": "BackupPrices",
+      "functionName": "BackupPrices"
+    }, {
+      "menuName": "LibSort",
+      "functionName": "LibSort"
+    }, {
+      "menuName": "ThoughtsBackup",
+      "functionName": "ThoughtsBackup"
+    }, {
+      "menuName": "ThoughtsBackup 1",
+      "functionName": "ThoughtsBackup1"
+    }, {
+      "menuName": "asdf",
+      "functionName": "asdf"
+    }, {
+      "menuName": "OverviewAdjust",
+      "functionName": "OverviewAdjust"
+    }, {
+      "menuName": "Untitled macro",
+      "functionName": "Untitledmacro"
+    }, {
+      "menuName": "MyLibSorter",
+      "functionName": "MyLibSorter",
+      "defaultShortcut": "Ctrl+Alt+Shift+1"
+    }, {
+      "menuName": "PlayerStatsPuller",
+      "functionName": "PlayerStatsPuller"
+    }, {
+      "menuName": "testerer",
+      "functionName": "testerer"
+    }]
+  }
+}

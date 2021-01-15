@@ -34,16 +34,16 @@ function CheckStorePriceUpdater()
       {
         if (sourcearray[j][5] == '')
         {
-          SHEETS[1].getRange(i, 21).setValue("N/A")
-          SHEETS[1].getRange(i, 22).setValue("N/A")
+          SHEETS[1].getRange(i, 23).setValue("N/A")
+          SHEETS[1].getRange(i, 24).setValue("N/A")
         }
         else if (typeof(sourcearray[j][5]) == 'number')
         {
-          SHEETS[1].getRange(i, 21).setValue(sourcearray[j][5])
-          SHEETS[1].getRange(i, 22).setValue("-")
+          SHEETS[1].getRange(i, 23).setValue(sourcearray[j][5])
+          SHEETS[1].getRange(i, 24).setValue("-")
         }
         else if (typeof(sourcearray[j][5]) == 'string')
-          SHEETS[1].getRange(i, 21).setValue(sourcearray[j][5])
+          SHEETS[1].getRange(i, 23).setValue(sourcearray[j][5])
           
           break;
       }

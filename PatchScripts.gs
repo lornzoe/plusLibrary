@@ -21,3 +21,8 @@ function ReplaceBackupFormulaWithName() {
     val.getRange(i,4).setValue(grabbedname)    
   }
 }
+
+function testFunc()
+{
+    SHEETS[0].getRange('A8:8').copyFormatToRange(SHEETS[0], 1, 21,17, SHEETS[0].getMaxRows() - 17);
+}

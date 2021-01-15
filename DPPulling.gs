@@ -12,6 +12,7 @@ function MyLibUpdater()
       {
         mainarray.splice(j, 1);
         importarray.splice(i, 1);
+        importarray2.splice(i, 1);
         
         break;
       }
@@ -31,7 +32,7 @@ function MyLibUpdater()
       {
         SHEETS[1].deleteRow(k+6);
         continue;
-
+        
       }
       
       for (let k = referencearray.length-1; k >=0; k--)
@@ -73,6 +74,8 @@ function MyLibUpdater()
                            , "FALSE"
                            , "=VLOOKUP("+ refid +",'2 - DataProcessing'!A:L, 7, FALSE) & " + '" / "' + " & VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 8, FALSE)"
                            , "=VLOOKUP("+ refid +", '2 - DataProcessing'!A:L, 9, FALSE)"
+                           , ''
+                           , ''
                            , '' 
                            , "=IF(F"+refrow+">1, IFERROR(Q"+refrow+"/F"+refrow+",Q"+refrow+"), Q"+refrow+")"
                            , "=IF(ISNUMBER(U" + refrow + "), U" + refrow + ", V" + refrow + ")"
@@ -93,13 +96,13 @@ function MyLibUpdater()
           // if id exists on backuparray, we use said value to override the variables
           let backups;
           backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 22),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
+          backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 26),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
-          
+          backups = backupsheet.getRange(i + 6, 12).copyTo(SHEETS[1].getRange(refrow, 16),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           break;
         }
-        if ( i == backuparray.length -1) 
+        if ( i == backuparray.length -1 && backuparray[i][0] != refid) 
         {
           backupsheet.appendRow([
             '',
@@ -112,9 +115,11 @@ function MyLibUpdater()
             '',
             '',
             "FALSE",
-            "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)"
+            "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)",
+            ''
           ]);
           BKUPFORMATRANGE.copyFormatToRange(BKUPSHEET,2,10,BKUPSHEET.getMaxRows(), BKUPSHEET.getMaxRows())
+          
           BKUPSHEET.getRange(BKUPSHEET.getMaxRows(),2,1,10).setDataValidations(BKUPFORMATRANGE.getDataValidations())
         }
       }
@@ -122,7 +127,7 @@ function MyLibUpdater()
       SHEETS[1].getRange(refrow, 12).insertCheckboxes();
       SHEETS[1].getRange(refrow, 10).setDataValidation(cellrule);
     }
-    FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 22, 6, SHEETS[1].getMaxRows())
+    FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 24, 6, SHEETS[1].getMaxRows())
     //SHEETS[1].setRowHeights(6, SHEETS[1].getMaxRows() - 5, GAMEROWHEIGHT)
     
     SHEETS[1].getRange(6, 3, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, true)
@@ -130,11 +135,11 @@ function MyLibUpdater()
     SHEETS[1].getRange(6, 9, SHEETS[1].getMaxRows() - 6, 1).setBorder(true, true, true, true, false, true)
     SHEETS[1].getRange(6, 10, SHEETS[1].getMaxRows() - 6, 3).setBorder(true, true, true, true, false, true)
     SHEETS[1].getRange(6, 13, SHEETS[1].getMaxRows() - 6, 2).setBorder(true, true, true, true, false, true)
-    SHEETS[1].getRange(6, 16, SHEETS[1].getMaxRows() - 6, 4).setBorder(true, true, true, true, false, true)
+    SHEETS[1].getRange(6, 18, SHEETS[1].getMaxRows() - 6, 4).setBorder(true, true, true, true, false, true)
     
     SHEETS[4].getRange("A5").setValue(getPlayedGameCount());
     SHEETS[4].getRange("B5").setValue(gameCount());
     OverviewAdjust() 
-     
+    
   }
 }
