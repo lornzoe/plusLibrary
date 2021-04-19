@@ -78,10 +78,10 @@ function MyLibUpdater()
                            , ''
                            , ''
                            , '' 
-                           , "=IF(F"+refrow+">1, IFERROR(Q"+refrow+"/F"+refrow+",Q"+refrow+"), Q"+refrow+")"
-                           , "=IF(ISNUMBER(U" + refrow + "), U" + refrow + ", V" + refrow + ")"
-                           , "=I"+refrow+"-Q"+refrow+""
-                           , "=IFERROR(R"+refrow+"/Q"+refrow+",R"+refrow+"/1)"
+                           , "=IF(F"+refrow+">1, IFERROR(S"+refrow+"/F"+refrow+",S"+refrow+"), S"+refrow+")"
+                           , "=IF(ISNUMBER(W" + refrow + "), W" + refrow + ", X" + refrow + ")"
+                           , "=I"+refrow+"-S"+refrow+""
+                           , "=IFERROR(T"+refrow+"/S"+refrow+",T"+refrow+"/1)"
                            , ''
                            , "=TRANSPOSE(CheckStorePrice(D" + refrow + "))"]);  
       
@@ -99,7 +99,7 @@ function MyLibUpdater()
           backups = backupsheet.getRange(i + 6, 8).copyTo(SHEETS[1].getRange(refrow, 9),SpreadsheetApp.CopyPasteType.PASTE_VALUES); // cost
           backups = backupsheet.getRange(i + 6, 9).copyTo(SHEETS[1].getRange(refrow, 24),SpreadsheetApp.CopyPasteType.PASTE_VALUES); // manual store price
           backups = backupsheet.getRange(i + 6, 5, 1, 3).copyTo(SHEETS[1].getRange(refrow, 10),SpreadsheetApp.CopyPasteType.PASTE_VALUES); //nzoscore, thoughts, tickmark
-          backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
+          backups = backupsheet.getRange(i + 6, 10).copyTo(SHEETS[1].getRange(refrow, 2),SpreadsheetApp.CopyPasteType.PASTE_VALUES); // 
           backups = backupsheet.getRange(i + 6, 12).copyTo(SHEETS[1].getRange(refrow, 16),SpreadsheetApp.CopyPasteType.PASTE_VALUES);
           break;
         }
