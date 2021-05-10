@@ -43,6 +43,15 @@
     }, {
       "menuName": "testerer",
       "functionName": "testerer"
+    }, {
+      "menuName": "DataImporter",
+      "functionName": "DataImporter"
+    }, {
+      "menuName": "AchievementUpdater",
+      "functionName": "AchievementUpdater"
+    }, {
+      "menuName": "CheckStorePriceUpdater",
+      "functionName": "CheckStorePriceUpdater"
     }]
   }
 }
