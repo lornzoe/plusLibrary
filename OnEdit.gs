@@ -1,13 +1,54 @@
 function onEdit(e)
 {
-  Logger.log("maintentence period")
-  return;
+  //Logger.log("maintentence period")
+  //return;
   
   let name = e.range.getSheet().getSheetName();
   Logger.log(e.value)
-  
+
   if (name == "1 - MyLibrary")
     onMyLibEdit(e);
+  
+}
+
+function ShowHideType(type, show)
+{
+  let range = SHEETS[1].getRange("B6:B").getValues();
+  for (let i = 0; i < range.length; i++)
+  {
+    if (range[i][0] != type)
+      continue
+    
+    if (show) 
+      SHEETS[1].showRows(i+6);
+    else
+      SHEETS[1].hideRows(i+6);
+  }
+}
+function ShowHideType2 (exception, show)
+{
+    let range = SHEETS[1].getRange("B6:B").getValues();
+  for (let i = 0; i < range.length; i++)
+  {
+    if (range[i][0] == exception)
+      {
+        if (show) 
+          SHEETS[1].showRows(i+6);
+        else
+          SHEETS[1].hideRows(i+6);
+
+        continue;
+      }
+    
+    if (!show) 
+      SHEETS[1].showRows(i+6);
+    else
+      SHEETS[1].hideRows(i+6);
+  }
+}
+
+function ShowHideType3(game)
+{
   
 }
 
@@ -16,28 +57,50 @@ function onMyLibEdit(e)
   Logger.log("taking route: onMyLibEdit(e)")
   let row = e.range.getRow();
   let col = e.range.getColumn();
-  
+  Logger.log(row);
+  Logger.log(col);
+
   if (row == 3)
   {
     Logger.log("if (row == 3)")
     if (col == 2) // show blacklist
     {
       let range = SHEETS[1].getRange("B6:B").getValues();
-      if (e.value == "TRUE")
+      if (e.value == "Include All")
       {
         for (let i = 0; i < range.length; i++)
         {
-          if (range[i][0] == true)
-            SHEETS[1].showRows(i+6);
+          SHEETS[1].showRows(i+6);
         }
       }
-      else
+      else if (e.value == "Include BL")
       {
-        for (let i = 0; i < range.length; i++)
-        {
-          if (range[i][0] == true)
-            SHEETS[1].hideRows(i+6);
-        }
+/*         ShowHideType("Game", true);
+        ShowHideType("Blacklist", true);
+        ShowHideType("Bundle Trash", false); */
+
+                ShowHideType2("Bundle Trash", false);
+      }
+      else if (e.value == "Include BT")
+      {
+        /* ShowHideType("Game", true);
+        ShowHideType("Blacklist", false);
+        ShowHideType("Bundle Trash", true); */
+        ShowHideType2("Blacklist", false);
+      }
+      else if (e.value == "BT Only")
+      {
+/*         ShowHideType("Game", false);
+        ShowHideType("Blacklist", false);
+        ShowHideType("Bundle Trash", true); */
+
+        ShowHideType2("Bundle Trash", true);
+      }
+      else if (e.value == "Games Only")
+      {
+        ShowHideType("Game", true);
+        ShowHideType("Blacklist", false);
+        ShowHideType("Bundle Trash", false);
       }
     }
     
@@ -97,23 +160,13 @@ function onMyLibEdit(e)
       default:
         break;
     }
-    
+
     let refid = SHEETS[1].getRange(row, 4).getValue()
-    Logger.log("doing cleanup, update id = ", refid + '')
-    
+    Logger.log(refid)
+
     let backupsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
-    let backuparray = backupsheet.getRange("C6:C").getValues()
-    Logger.log(backuparray[0][0])
-    for (let i = 0; i < backuparray.length; i++)
-    {
-      if (backuparray[i][0]+ '' == refid+'')
-      {
-        Logger.log("found match")
-        // if id exists on backuparray, we use said value to override the variables
-        backupsheet.getRange(i+6, rtf).setValue(e.value)
-        break;
-      }
-    }
+    backupsheet.getRange(BackupSearchWrapper(refid), rtf).setValue(e.value)
+
     
     return;
   }
