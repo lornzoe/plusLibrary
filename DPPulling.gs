@@ -53,6 +53,8 @@ function MyLibUpdater()
   {
     let backupsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
     let cellrule = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup").getRange("B2").getDataValidation();
+    let cellrule2 = SHEETS[1].getRange("B4").getDataValidation();
+
     for (let i = 0; i < importarray.length && i <= ITERATIONLIMIT; i++) // iteration limit
     {
       let refid = importarray[i][0];
@@ -62,7 +64,7 @@ function MyLibUpdater()
       SHEETS[0].appendRow(['']);
       
       SHEETS[1].appendRow([''
-                           , "FALSE"
+                           , "Game"
                            , '=IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg")'
                            , refid
                            , refname
@@ -124,7 +126,8 @@ function MyLibUpdater()
           BKUPSHEET.getRange(BKUPSHEET.getMaxRows(),2,1,10).setDataValidations(BKUPFORMATRANGE.getDataValidations())
         }
       }
-      SHEETS[1].getRange(refrow, 2).insertCheckboxes();
+      //SHEETS[1].getRange(refrow, 2).insertCheckboxes();
+      SHEETS[1].getRange(refrow, 2).setDataValidation(cellrule2);
       SHEETS[1].getRange(refrow, 12).insertCheckboxes();
       SHEETS[1].getRange(refrow, 10).setDataValidation(cellrule);
     }
@@ -141,6 +144,17 @@ function MyLibUpdater()
     SHEETS[4].getRange("A5").setValue(getPlayedGameCount());
     SHEETS[4].getRange("B5").setValue(gameCount());
     OverviewAdjust() 
-    
+        
+        
+    SortMyBlacklist()
+    SortMyLib()
   }
+}
+
+function SortMyLib(){
+  SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary").getRange('A6:X').sort({column: 4, ascending: true});
+}
+
+function SortMyBlacklist(){
+  SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup").getRange('A6:L').sort({column: 3, ascending: true});
 }

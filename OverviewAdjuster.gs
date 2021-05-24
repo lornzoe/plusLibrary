@@ -66,5 +66,20 @@ function OverviewAdjust()
   // checkbox formatting
   SHEETS[0].getRange(17, 11, SHEETS[0].getMaxRows() - 17, 1).insertCheckboxes().setValue("");
   SHEETS[0].getRange(SHEETS[0].getMaxRows(), 11).removeCheckboxes().setValue("");
-  
+
+
+}
+
+function UnusedOverviewRowHider()
+{
+    // hiding the rows unused
+  let gamelimit = Number(SHEETS[4].getRange("C3").getValues())
+  let gamelimit2 = Number(SHEETS[4].getRange("C2").getValues() - gamelimit)
+
+  Logger.log(gamelimit)
+  Logger.log (gamelimit + 16)
+  Logger.log(gamelimit2)
+
+  SHEETS[0].showRows(17, gamelimit)
+  SHEETS[0].hideRows(16 + gamelimit, gamelimit2);
 }
