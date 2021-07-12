@@ -117,7 +117,7 @@ function MyLibUpdater()
             "FALSE",
             '',
             '',
-            "FALSE",
+            "Bundle Trash",
             "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)",
             ''
           ]);
