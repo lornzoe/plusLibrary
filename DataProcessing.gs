@@ -2,7 +2,7 @@ function DataImporter()
 {
   var localsheet = SHEETS[2];
   var idarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
-  var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=1", "$.response.games[*]", "appid, name, playtime_forever, playtime_2weeks");
+  var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=1&include_played_free_games=1&include_free_sub=0&skip_unvetted_apps=0", "$.response.games[*]", "appid, name, playtime_forever, playtime_2weeks");
   var exceptionsheet = SHEETS[3];
   var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns()).getValues();
   
