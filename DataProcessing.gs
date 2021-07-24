@@ -7,7 +7,7 @@ function DataImporter()
   var exceptionarray = exceptionsheet.getRange(1, 1, exceptionsheet.getMaxRows(), exceptionsheet.getMaxColumns()).getValues();
   
   // binding exceptionarray to importarray
-  for (var i = 1; i < exceptionarray.length; i++)
+  /*for (var i = 1; i < exceptionarray.length; i++)
   {
     importarray.push(new Array())
     importarray[importarray.length-1][0] = exceptionarray[i][0];
@@ -16,7 +16,7 @@ function DataImporter()
     importarray[importarray.length-1][3] = ''; 
     Logger.log(importarray[importarray.length-1])
   }
-  
+  */
   // comparison phase
   for (var i = importarray.length-1; i >= 0; i--)
   {
