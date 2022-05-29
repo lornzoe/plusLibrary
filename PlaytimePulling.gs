@@ -1,7 +1,7 @@
 function CombinedTimePuller(){
   var localsheet = SHEETS[2];
   var idarray = localsheet.getRange(2, 1, localsheet.getMaxRows()).getValues();
-  var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"%0A&include_appinfo=0", "$.response.games[*]", "appid, playtime_forever, playtime_2weeks");
+  var importarray = IMPORTJSONAPI("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + APIKEY + "&steamid="+ USERID +"&include_appinfo=0&include_played_free_games=1&include_free_sub=0&skip_unvetted_apps=0", "$.response.games[*]", "appid, playtime_forever, playtime_2weeks");
   
   localsheet.getRange(2, 5, localsheet.getMaxRows() - 1).setValue('-')
   for (var i = 1; i < importarray.length; i++)
