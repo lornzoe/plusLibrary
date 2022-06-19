@@ -65,8 +65,8 @@ function MyLibUpdater()
       
       SHEETS[1].appendRow([''
                            , "Game"
-                           , '=HYPERLINK(D2 & ROW(),IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg"))'
-                           , '=HYPERLINK(D3 & ' + refid + ', ' + refid + ')'
+                           , '=HYPERLINK(INDIRECT("D2") & ROW(),IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + refid + '/capsule_184x69.jpg"))'
+                           , '=HYPERLINK(INDIRECT("D3") & ' + refid + ', ' + refid + ')'
                            , refname
                            , "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:D, 4, FALSE)/60"
                            , "=IFERROR(VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE)/60, VLOOKUP(" + refid + ", '2 - DataProcessing'!A:E, 5, FALSE))"

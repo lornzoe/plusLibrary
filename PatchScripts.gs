@@ -80,11 +80,12 @@ function ReplaceBackupBlacklistWithReview(){
 function AddHyperlinkToLogoAndAppID(){
   let lib = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary")
 
+  // c is the starting row. default should be 6, but chances are there's too many games for the damned script to run through
   for (let c = 6; c <= lib.getMaxRows(); c++)
   {
     let appid = lib.getRange(c,4).getValue()
-    lib.getRange(c,3).setValue('=HYPERLINK(D2 & ROW(),IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + appid + '/capsule_184x69.jpg"))')
-    lib.getRange(c,4).setValue('=HYPERLINK(D3 & ' + appid + ', ' + appid + ')')
+    lib.getRange(c,3).setValue('=HYPERLINK(INDIRECT("D2") & ROW(),IMAGE("https://steamcdn-a.akamaihd.net/steam/apps/' + appid + '/capsule_184x69.jpg"))')
+    lib.getRange(c,4).setValue('=HYPERLINK(INDIRECT("D3") & ' + appid + ', ' + appid + ')')
   }
   FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 24, 6, SHEETS[1].getMaxRows())
 }
