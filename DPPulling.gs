@@ -117,7 +117,7 @@ function MyLibUpdater()
             "FALSE",
             '',
             '',
-            "Bundle Trash",
+            "Game",
             "=VLOOKUP(" + refid + ", '2 - DataProcessing'!A:C, 3, FALSE)",
             ''
           ]);
