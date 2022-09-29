@@ -90,4 +90,29 @@ function AddHyperlinkToLogoAndAppID(){
   FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 24, 6, SHEETS[1].getMaxRows())
 }
 
+function PatchBackup()
+{
+  let manualrowoverride = 6;
 
+  let lib = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1 - MyLibrary");
+  let backup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1.5 - PlayerInput Backup")
+
+  for (var l = manualrowoverride; l <= lib.getMaxRows(); l++)
+  {
+    let backupRow = BackupSearchWrapper(lib.getRange(l,4).getValue());
+
+    //cost
+    backup.getRange(backupRow,8).setValue(lib.getRange(l,9).getValue())
+
+    //obtain date
+    backup.getRange(backupRow,12).setValue(lib.getRange(l,16).getValue())
+
+    // game bl
+    backup.getRange(backupRow,10).setValue(lib.getRange(l,2).getValue())
+
+    //opt; score, thoughts, tickmark.
+    backup.getRange(backupRow,5).setValue(lib.getRange(l,10).getValue())
+    backup.getRange(backupRow,6).setValue(lib.getRange(l,11).getValue())
+    backup.getRange(backupRow,7).setValue(lib.getRange(l,12).getValue())
+  }
+}
