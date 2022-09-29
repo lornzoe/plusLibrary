@@ -89,3 +89,5 @@ function AddHyperlinkToLogoAndAppID(){
   }
   FORMATRANGE.copyFormatToRange(SHEETS[1], 2, 24, 6, SHEETS[1].getMaxRows())
 }
+
+
